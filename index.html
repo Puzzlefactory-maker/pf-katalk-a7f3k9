@@ -62,7 +62,7 @@
 
   /* 하단 탭바 (장식용) */
   .tabbar { flex-shrink:0; background:#fff; border-top:1px solid #eef0f2;
-    display:flex; align-items:stretch; padding-bottom:calc(env(safe-area-inset-bottom, 0px) + var(--safe-b)); }
+    display:flex; align-items:stretch; padding-bottom:calc(var(--safe-b));padding-bottom:calc(env(safe-area-inset-bottom, 0px) + var(--safe-b)); }
   .tab { flex:1; display:flex; align-items:center; justify-content:center; color:#bcc2c8;
     min-height:56px; }
   .tab.active { color:#191919; }
@@ -162,7 +162,7 @@
   .msg-photo img { display:block; width:auto; max-width:100%; max-height:280px; height:auto; }
 
   /* 사진 크게 보기 */
-  #photoViewer { display:none; position:absolute; inset:0; z-index:200; background:#000;
+  #photoViewer { display:none; position:absolute; top:0;right:0;bottom:0;left:0; z-index:200; background:#000;
     align-items:center; justify-content:center; }
   #photoViewer.show { display:flex; }
   #photoViewer img { max-width:100%; max-height:100%; object-fit:contain; }
@@ -172,7 +172,7 @@
 
   /* 하단 입력바 (장식용, 손님 모드에서 비활성) */
   .inputbar { flex-shrink:0; background:#fff; display:flex; align-items:center;
-    padding:8px 12px calc(8px + env(safe-area-inset-bottom, 0px) + var(--safe-b)); gap:8px; border-top:1px solid #eee; }
+    padding:8px 12px calc(8px + var(--safe-b));padding:8px 12px calc(8px + env(safe-area-inset-bottom, 0px) + var(--safe-b)); gap:8px; border-top:1px solid #eee; }
   .inputbar .plus { font-size:24px; color:#8a8a8a; }
   .inputbar .fake-input { flex:1; background:#f2f2f2; border-radius:18px; height:36px;
     display:flex; align-items:center; padding:0 14px; color:#b0b0b0; font-size:14px; }
@@ -182,7 +182,7 @@
   .empty { padding:60px 30px; text-align:center; color:#8a8a8a; font-size:14px; line-height:1.7; }
 
   /* ===== 관리자 패널 ===== */
-  #adminOverlay { display:none; position:absolute; inset:0; background:#f4f5f7; z-index:50;
+  #adminOverlay { display:none; position:absolute; top:0;right:0;bottom:0;left:0; background:#f4f5f7; z-index:50;
     flex-direction:column; }
   #adminOverlay.active { display:flex; }
   .admin-header { background:#3a4a5a; color:#fff; padding:14px 16px; display:flex;
@@ -199,7 +199,7 @@
   .pane-empty { color:#98a5b2; font-size:13px; text-align:center; padding:40px 16px; }
 
   /* 이 폰을 쓸 지점 고르기 — 고르기 전에는 내용이 전혀 보이지 않는다 */
-  #pickBranch { position:absolute; inset:0; z-index:70; background:#ffe812; display:none;
+  #pickBranch { position:absolute; top:0;right:0;bottom:0;left:0; z-index:70; background:#ffe812; display:none;
                 align-items:center; justify-content:center; padding:22px; }
   #pickBranch.show { display:flex; }
   .bp-card { width:100%; max-width:360px; max-height:100%; overflow:auto; background:#fff;
@@ -354,7 +354,7 @@
     z-index:220; opacity:0; transition:opacity .25s; pointer-events:none; max-width:80%; text-align:center; }
   .toast.show { opacity:1; }
 
-  #confirmBox { display:none; position:absolute; inset:0; z-index:240; background:rgba(0,0,0,.4);
+  #confirmBox { display:none; position:absolute; top:0;right:0;bottom:0;left:0; z-index:240; background:rgba(0,0,0,.4);
     align-items:center; justify-content:center; padding:30px; }
   #confirmBox.show { display:flex; }
   .confirm-card { background:#fff; border-radius:14px; padding:22px 20px 16px; width:100%;
@@ -421,6 +421,214 @@
   .tab svg { width:26px; height:26px; }
   .tab .rdot { position:absolute; top:-3px; right:-8px; width:7px; height:7px; border-radius:50%; background:#ff5c3b; }
 </style>
+<!-- ===================== 구형 브라우저 호환 블록 =====================
+     삼성 인터넷 5.0(2016년 갤럭시) 이상, 크롬 49 이상에서도 앱이 열리도록
+     없는 기능을 대신 채워 넣는다. 최신 기기에서는 아무 일도 하지 않는다. -->
+<style id="oldBrowserCss">
+/* 단체방 프로필 사진 묶음 — 크롬 57 미만에는 grid가 없어서 flex로 대신한다 */
+@supports not (display:grid){
+  .avatar.grp{ display:flex; flex-wrap:wrap; }
+  .avatar.grp>*{ box-sizing:border-box; }
+  .avatar.grp.n1>*{ width:100%; height:100%; }
+  .avatar.grp.n2>*{ width:50%; height:100%; }
+  .avatar.grp.n3>*,.avatar.grp.n4>*{ width:50%; height:50%; }
+}
+</style>
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- 1. 없는 자바스크립트 기능 채우기 ---------- */
+
+  /* 숫자 앞에 0을 붙일 때 쓴다 (시각 표시). 크롬 57 미만에 없음 */
+  if(!String.prototype.padStart){
+    String.prototype.padStart = function(len, pad){
+      var s = String(this);
+      pad = (pad === undefined) ? ' ' : String(pad);
+      if(s.length >= len || pad === '') return s;
+      var fill = '';
+      while(fill.length < len - s.length) fill += pad;
+      return fill.slice(0, len - s.length) + s;
+    };
+  }
+  if(!String.prototype.padEnd){
+    String.prototype.padEnd = function(len, pad){
+      var s = String(this);
+      pad = (pad === undefined) ? ' ' : String(pad);
+      if(s.length >= len || pad === '') return s;
+      var fill = '';
+      while(fill.length < len - s.length) fill += pad;
+      return s + fill.slice(0, len - s.length);
+    };
+  }
+
+  /* 앱 설치 안내를 닫을 때 쓴다. 크롬 63 미만에 없음 */
+  if(window.Promise && !Promise.prototype['finally']){
+    Promise.prototype['finally'] = function(cb){
+      var P = this.constructor || Promise;
+      return this.then(
+        function(v){ return P.resolve(cb()).then(function(){ return v; }); },
+        function(e){ return P.resolve(cb()).then(function(){ throw e; }); }
+      );
+    };
+  }
+
+  /* 화면 요소를 한꺼번에 훑을 때 쓴다. 크롬 51 미만에 없어서 앱이 멈춘다 */
+  ['NodeList','HTMLCollection','DOMTokenList'].forEach(function(n){
+    var C = window[n];
+    if(C && C.prototype && !C.prototype.forEach){
+      C.prototype.forEach = Array.prototype.forEach;
+    }
+  });
+
+  if(!Object.entries){
+    Object.entries = function(o){
+      var r = [], k;
+      for(k in o){ if(Object.prototype.hasOwnProperty.call(o, k)) r.push([k, o[k]]); }
+      return r;
+    };
+  }
+  if(!Object.values){
+    Object.values = function(o){
+      var r = [], k;
+      for(k in o){ if(Object.prototype.hasOwnProperty.call(o, k)) r.push(o[k]); }
+      return r;
+    };
+  }
+  if(!Array.prototype.includes){
+    Array.prototype.includes = function(v){ return this.indexOf(v) !== -1; };
+  }
+  if(window.Element && !Element.prototype.closest){
+    var m = Element.prototype.matches || Element.prototype.webkitMatchesSelector ||
+            Element.prototype.msMatchesSelector;
+    Element.prototype.matches = m;
+    Element.prototype.closest = function(sel){
+      var e = this;
+      while(e && e.nodeType === 1){ if(m.call(e, sel)) return e; e = e.parentElement; }
+      return null;
+    };
+  }
+
+  /* ---------- 2. 칸 사이 여백(gap) 대신 여백 직접 계산 ---------- */
+  /* 크롬 84 미만에서는 flex 안의 gap이 무시되어 글자·버튼이 다 붙어 보인다.
+     그래서 스타일을 훑어 gap이 쓰인 곳을 찾아 바깥여백으로 바꿔 준다. */
+
+  var gapStyle = null;
+
+  function flexGapWorks(){
+    var box = document.createElement('div');
+    box.style.cssText = 'display:flex;flex-direction:column;row-gap:1px;' +
+                        'position:absolute;visibility:hidden;height:0;overflow:visible';
+    box.appendChild(document.createElement('div'));
+    box.appendChild(document.createElement('div'));
+    var host = document.body || document.documentElement;
+    host.appendChild(box);
+    var ok = box.scrollHeight === 1;
+    host.removeChild(box);
+    return ok;
+  }
+
+  function firstValue(v){
+    v = (v || '').trim();
+    if(!v || v === 'normal') return '';
+    return v.split(/\s+/)[0];
+  }
+  function secondValue(v){
+    v = (v || '').trim();
+    if(!v || v === 'normal') return '';
+    var p = v.split(/\s+/);
+    return p[1] || p[0];
+  }
+
+  function collect(rules, out){
+    if(!rules) return;
+    for(var i = 0; i < rules.length; i++){
+      var r = rules[i];
+      if(r.cssRules && r.cssRules.length) collect(r.cssRules, out);   /* @media 안쪽까지 */
+      if(!r.style || !r.selectorText) continue;
+      if(r.style.gridTemplateColumns || r.style.gridTemplateRows) continue;  /* 표 배치는 따로 처리 */
+      if((r.style.display || '').indexOf('grid') >= 0) continue;
+
+      var g  = r.style.getPropertyValue('gap');
+      var rg = (r.style.getPropertyValue('row-gap')    || firstValue(g)).trim();
+      var cg = (r.style.getPropertyValue('column-gap') || secondValue(g)).trim();
+      if(rg === 'normal') rg = '';
+      if(cg === 'normal') cg = '';
+      if(!rg && !cg) continue;
+
+      out.push({ sel: r.selectorText, rg: rg, cg: cg,
+                 disp: (r.style.display || '').trim(),
+                 dir:  (r.style.flexDirection || '').trim(),
+                 wrap: (r.style.flexWrap || '').trim() });
+    }
+  }
+
+  function buildGapCss(){
+    var found = [];
+    var sheets = document.styleSheets;
+    for(var i = 0; i < sheets.length; i++){
+      try { collect(sheets[i].cssRules, found); } catch(e){ /* 읽을 수 없는 스타일은 건너뛴다 */ }
+    }
+
+    var css = [];
+    for(var k = 0; k < found.length; k++){
+      var f = found[k];
+      var parts = f.sel.split(',');
+      for(var s = 0; s < parts.length; s++){
+        var sel = parts[s].trim();
+        if(!sel || sel.indexOf('::') >= 0) continue;
+
+        /* 실제 화면에 있는 요소를 보고 가로줄인지 세로줄인지 판단한다 */
+        var el = null, cs = null;
+        try { el = document.querySelector(sel); } catch(e){ continue; }
+        if(el && window.getComputedStyle) cs = window.getComputedStyle(el);
+
+        var disp = f.disp || (cs ? cs.display : '');
+        if(disp.indexOf('flex') < 0) continue;          /* flex가 아니면 손대지 않는다 */
+
+        var dir  = f.dir  || (cs ? (cs.flexDirection || 'row') : 'row');
+        var wrap = f.wrap || (cs ? (cs.flexWrap || 'nowrap') : 'nowrap');
+        var column = dir.indexOf('column') === 0;
+
+        if(wrap.indexOf('wrap') === 0){
+          /* 줄바꿈되는 묶음은 모든 칸에 여백을 준다 */
+          if(f.cg) css.push(sel + '>*{margin-right:' + f.cg + '}');
+          if(f.rg) css.push(sel + '>*{margin-bottom:' + f.rg + '}');
+        } else if(column){
+          if(f.rg) css.push(sel + '>*+*{margin-top:' + f.rg + '}');
+        } else {
+          if(f.cg) css.push(sel + '>*+*{margin-left:' + f.cg + '}');
+        }
+      }
+    }
+
+    if(!gapStyle){
+      gapStyle = document.createElement('style');
+      gapStyle.id = 'oldBrowserGap';
+      (document.head || document.documentElement).appendChild(gapStyle);
+    }
+    gapStyle.textContent = css.join('\n');
+  }
+
+  function startGapFix(){
+    try {
+      if(flexGapWorks()) return;            /* 요즘 기기 — 그대로 둔다 */
+      buildGapCss();
+      /* 앱이 화면을 다 그린 뒤 한 번 더 — 그때 생긴 부분까지 맞춘다 */
+      setTimeout(buildGapCss, 1200);
+      setTimeout(buildGapCss, 3000);
+    } catch(e){ /* 실패해도 앱은 그대로 쓸 수 있으니 조용히 넘어간다 */ }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', startGapFix);
+  } else {
+    startGapFix();
+  }
+})();
+</script>
+<!-- =================== 구형 브라우저 호환 블록 끝 =================== -->
+
 </head>
 <body>
 <div id="phone" style="--safe-b: 0px;">
@@ -4797,7 +5005,7 @@ const EMBEDDED_DATA = {
 
 /* 코드(기능) 버전. 데이터와 별개로 “이 파일의 프로그램이 언제 것인지”를 나타낸다.
    관리자 정보란에 표시되므로, 폰에 옛 파일이 올라갔는지 바로 알 수 있다. */
-const CODE_VERSION = '2026-09-29-AD';
+const CODE_VERSION = '2026-09-30-AF (구형 브라우저 호환)';
 
 const STORE_KEY = 'crimescene_kakao_v2';
 const LEGACY_KEYS = ['crimescene_kakao_v1'];
@@ -5243,8 +5451,11 @@ function personId(name){
 function ensurePeople(L){
   if(!L) return [];
   if(!Array.isArray(L.people)) L.people = [];
-  /* 어쩌다 빈 항목이 섞여 들어가도 앱이 멈추지 않게 걸러낸다 */
-  L.people = L.people.filter(p=> p && typeof p === 'object');
+  /* 어쩌다 빈 항목이 섞여 들어가도 앱이 멈추지 않게 걸러낸다.
+     배열을 새로 만들지 않고 그 자리에서 지운다 — 새로 넣은 인물이 사라지지 않게 하기 위함 */
+  for(let i = L.people.length - 1; i >= 0; i--){
+    if(!L.people[i] || typeof L.people[i] !== 'object') L.people.splice(i, 1);
+  }
   const byName = {};
   L.people.forEach(p=>{
     if(!p.id) p.id = personId(p.name);
@@ -6764,8 +6975,9 @@ function bindTreeSection(body){
       listOfCat(c1, node);            /* 중분류마다 카카오톡 한 벌을 만들어 둔다 */
     } else {
       const L = listOfCat(c1, c2);
-      const nm = uniqueName(peopleOf(L).map(p=>p.name), '새 인물');
-      L.people.push({ id:id(), name:nm, avatar:'', silo:peopleOf(L).length % 2 });
+      const list = peopleOf(L);                 /* 먼저 명단을 확정한 뒤에 넣는다 */
+      const nm = uniqueName(list.map(p=>p.name), '새 인물');
+      list.push({ id:personId(nm), name:nm, avatar:'', silo:list.length % 2 });
     }
     save(); renderAdminHome();
   };
@@ -7505,7 +7717,7 @@ function bindRoomEditor(room, rid){
     const v = $('#newPart').value.trim(); if(!v) return;
     const L = curList();
     let p = personByName(L, v);
-    if(!p){ p = {id:id(), name:v, avatar:'', silo:peopleOf(L).length%2}; L.people.push(p); }
+    if(!p){ const list = peopleOf(L); p = {id:personId(v), name:v, avatar:'', silo:list.length%2}; list.push(p); }
     if(inRoom(room, p.name)){ toast('이미 참여자에 있습니다'); return; }
     room.participants.push({id:id(), name:p.name});
     save(); editRoom(rid);
