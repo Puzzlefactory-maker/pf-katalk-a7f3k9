@@ -5005,7 +5005,7 @@ const EMBEDDED_DATA = {
 
 /* 코드(기능) 버전. 데이터와 별개로 “이 파일의 프로그램이 언제 것인지”를 나타낸다.
    관리자 정보란에 표시되므로, 폰에 옛 파일이 올라갔는지 바로 알 수 있다. */
-const CODE_VERSION = '2026-09-30-AF (구형 브라우저 호환)';
+const CODE_VERSION = '2026-10-01-AG (구형 브라우저 호환)';
 
 const STORE_KEY = 'crimescene_kakao_v2';
 const LEGACY_KEYS = ['crimescene_kakao_v1'];
@@ -5422,6 +5422,19 @@ function fixListForBranch(){
   const keys = [];
   (lk.children||[]).forEach(c2=> (c2.lists||[]).forEach(k=> keys.push(k)));
   for(const k of keys){ const i = findListIdx(k); if(i >= 0){ listIdx = i; return; } }
+}
+/* 지금 목록에 이 폰의 “나”가 없을 때, 볼 수 있는 다른 목록 중에 “나”가 정해진 곳을 찾아 옮긴다.
+   테마가 둘 이상인 지점에서 앱을 껐다 켜면 첫 테마로 돌아가 손님 모드가 풀리던 것을 막는다 */
+function fixListForMe(){
+  if(meId()) return;
+  const back = listIdx;
+  for(let i = 0; i < data.lists.length; i++){
+    const L = data.lists[i];
+    if(!L || !viewAs[L.key] || !listAllowed(L)) continue;
+    listIdx = i;
+    if(meId()){ applyAliasMe(L.key); rememberList(); return; }
+  }
+  listIdx = back;                      /* 못 찾았으면 원래 보던 목록으로 되돌린다 */
 }
 /* 관리자 화면이 잠긴 지점 밖으로 나가지 않게 한다 */
 function enforceBranchLock(){
@@ -5983,8 +5996,11 @@ function savedListKey(){
 function selectListFromUrl(){
   const key = requestedListKey();
   const meName = requestedMeName();
-  /* 홈 화면 아이콘(설치된 앱)으로 실행하면 마지막으로 본 목록으로 시작한다 */
-  if(isStandalone() && !key){
+  /* 주소에 목록을 적지 않았으면 마지막으로 본 목록으로 시작한다.
+     예전에는 “설치된 앱으로 실행했을 때”만 그렇게 했는데, 오래된 폰(갤럭시 S6 등)은
+     설치 여부를 알아내는 기능 자체가 없어서 늘 기본 목록으로 돌아가 버렸다.
+     그래서 설치 여부를 따지지 않고 마지막으로 본 목록을 그대로 쓴다. */
+  if(!key){
     const saved = savedListKey();
     const si = saved ? findListIdx(saved) : -1;
     if(si >= 0){ listIdx = si; applyAliasMe(saved); }
@@ -8144,6 +8160,7 @@ function decideStartScreen(){
   }
   if(!lockedC1() && (data.tree||[]).length){ renderBranchPicker(); return; }
   fixListForBranch();
+  fixListForMe();
   if(!meId()){ isAdmin = true; renderList(); openAdmin(true); return; }
   renderList();
 }
