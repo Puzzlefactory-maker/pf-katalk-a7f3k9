@@ -5005,7 +5005,7 @@ const EMBEDDED_DATA = {
 
 /* 코드(기능) 버전. 데이터와 별개로 “이 파일의 프로그램이 언제 것인지”를 나타낸다.
    관리자 정보란에 표시되므로, 폰에 옛 파일이 올라갔는지 바로 알 수 있다. */
-const CODE_VERSION = '2026-10-01-AG (구형 브라우저 호환)';
+const CODE_VERSION = '2026-10-01-AH (구형폰 보강)';
 
 const STORE_KEY = 'crimescene_kakao_v2';
 const LEGACY_KEYS = ['crimescene_kakao_v1'];
@@ -5384,14 +5384,11 @@ function curList(){ return data.lists[listIdx] || data.lists[0]; }
 const BRANCH_KEY = 'crimescene_kakao_branch';
 let branchLock = null;              /* {id, name} — 기기마다 따로 저장된다 */
 function loadBranch(){
-  try{ const v = JSON.parse(localStorage.getItem(BRANCH_KEY)); branchLock = (v && typeof v === 'object') ? v : null; }
+  try{ const v = JSON.parse(keepRead(BRANCH_KEY)); branchLock = (v && typeof v === 'object') ? v : null; }
   catch(e){ branchLock = null; }
 }
 function saveBranch(){
-  try{
-    if(branchLock) localStorage.setItem(BRANCH_KEY, JSON.stringify(branchLock));
-    else localStorage.removeItem(BRANCH_KEY);
-  }catch(e){}
+  keepWrite(BRANCH_KEY, branchLock ? JSON.stringify(branchLock) : '');
 }
 /* 잠긴 지점. 이름이 바뀌어도 id 로 따라가고, id 가 바뀌면 이름으로 찾아 고쳐 둔다 */
 function lockedC1(){
@@ -5447,10 +5444,55 @@ function treeMinDepth(){ return branchLocked() ? 1 : 0; }
 const VIEW_KEY = 'crimescene_kakao_me';
 let viewAs = {};                    /* {목록키: 인물id} — 기기마다 따로 저장된다 */
 function loadView(){
-  try{ const v = JSON.parse(localStorage.getItem(VIEW_KEY)); viewAs = (v && typeof v === 'object') ? v : {}; }
+  try{ const v = JSON.parse(keepRead(VIEW_KEY)); viewAs = (v && typeof v === 'object') ? v : {}; }
   catch(e){ viewAs = {}; }
 }
-function saveView(){ try{ localStorage.setItem(VIEW_KEY, JSON.stringify(viewAs)); }catch(e){} }
+function saveView(){ keepWrite(VIEW_KEY, JSON.stringify(viewAs)); }
+
+/* ---------- 이 기기 기억 진단 ----------
+   앱을 껐다 켤 때 저장한 내용이 살아남는지 확인하려고 실행 횟수를 센다.
+   켤 때마다 1씩 늘어야 정상이고, 늘 “1번째”로 나오면 폰이 저장을 지우고 있다는 뜻이다
+   (시크릿 모드 / 종료 시 사용 기록 삭제 설정 / 저장 공간 부족). */
+const RUN_KEY = 'crimescene_kakao_runs';
+let runCount = 0;
+let runCountErr = '';
+function bumpRunCount(){
+  try{
+    runCount = (parseInt(localStorage.getItem(RUN_KEY), 10) || 0) + 1;
+    localStorage.setItem(RUN_KEY, String(runCount));
+    /* 바로 다시 읽어 실제로 써졌는지 본다 */
+    if(String(localStorage.getItem(RUN_KEY)) !== String(runCount)) runCountErr = '쓰기 안 됨';
+  }catch(e){ runCount = 0; runCountErr = '저장 못 씀 (' + (e && e.name ? e.name : '알 수 없음') + ')'; }
+}
+function savedRaw(key){
+  try{ return localStorage.getItem(key) || '없음'; }catch(e){ return '읽기 실패'; }
+}
+
+/* ---------- 두 군데에 적어 두기 ----------
+   오래된 폰은 저장해 둔 내용(localStorage)을 저장 공간이 모자랄 때 통째로 지우기도 한다.
+   그래서 고른 지점과 “나”는 쿠키에도 같이 적어 두고, 한쪽이 지워져도 다른 쪽에서 되살린다. */
+function cookieSet(name, val){
+  try{ document.cookie = name + '=' + encodeURIComponent(val) + ';path=/;max-age=34560000'; }catch(e){}
+}
+function cookieGet(name){
+  try{
+    const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
+  }catch(e){ return ''; }
+}
+/* 저장해 둔 값을 읽는다. localStorage 가 비어 있으면 쿠키에서 꺼내 되살린다 */
+function keepRead(key){
+  let v = '';
+  try{ v = localStorage.getItem(key) || ''; }catch(e){}
+  if(v) return v;
+  v = cookieGet(key);
+  if(v){ try{ localStorage.setItem(key, v); }catch(e){} }   /* 되살린 값을 다시 적어 둔다 */
+  return v;
+}
+function keepWrite(key, v){
+  try{ if(v) localStorage.setItem(key, v); else localStorage.removeItem(key); }catch(e){}
+  cookieSet(key, v || '');
+}
 
 /* 인물 id 는 이름에서 만들어 어느 기기에서 만들어도 같게 한다
    (파일을 새로 받아도 폰에 고른 “나”가 그대로 유지되도록) */
@@ -5988,10 +6030,10 @@ function isStandalone(){
   }catch(e){ return false; }
 }
 function rememberList(){
-  try{ localStorage.setItem(LAST_KEY, curList().key); }catch(e){}
+  keepWrite(LAST_KEY, curList().key);
 }
 function savedListKey(){
-  try{ return localStorage.getItem(LAST_KEY) || ''; }catch(e){ return ''; }
+  return keepRead(LAST_KEY) || '';
 }
 function selectListFromUrl(){
   const key = requestedListKey();
@@ -7181,6 +7223,18 @@ function renderAdminHome(resetScroll){
         저장 방식 <b id="storeKind">${esc(storeKind)}</b> · 영구 저장 <b id="persistState">${esc(persistState)}</b><br>
         지금 내용 <b>${storageKB()} KB</b> · 기기 저장 공간 <b id="quotaText">${esc(quotaText)}</b>
       </div>
+      <div class="kv" style="background:#eef4ff;border-radius:8px;padding:8px">
+        <b>이 기기 기억 상태</b><br>
+        앱 실행 <b>${runCount}번째</b>${runCountErr ? ' · <b style="color:#c0392b">' + esc(runCountErr) + '</b>' : ''}<br>
+        저장된 지점 <b>${esc(savedRaw(BRANCH_KEY))}</b><br>
+        저장된 “나” <b>${esc(savedRaw(VIEW_KEY))}</b><br>
+        마지막으로 본 테마 <b>${esc(savedRaw(LAST_KEY))}</b> · 지금 테마 <b>${esc(curList().key)}</b><br>
+        화면 너비 <b>${window.innerWidth}px</b>
+      </div>
+      <div class="hint">앱을 껐다 켤 때 <b>실행 횟수가 1씩 늘어야</b> 정상입니다.
+        계속 “1번째”로 나오면 폰이 저장한 내용을 지우고 있는 것입니다 —
+        삼성 인터넷의 <b>시크릿 모드</b>를 껐는지, <b>설정 → 개인정보 보호 → 종료 시 데이터 삭제</b>가 켜져 있지 않은지,
+        폰 저장 공간이 부족하지 않은지 확인하세요.</div>
       <button class="btn btn-primary btn-block" id="checkUpdate">새 파일 확인 (업데이트)</button>
       <div class="kv" id="updInfo"></div>
       <div class="hint">서버에 놓인 index.html 을 확인해, 내용이 다르면 캐시와 저장분을 지우고 새 파일로 다시 엽니다.
@@ -8169,7 +8223,9 @@ function decideStartScreen(){
   /* 주소 끝에 ?reset=1 을 붙여 열면 폰에 저장된 내용과 캐시를 전부 지우고 파일 내용으로 시작한다 */
   let first = Promise.resolve();
   if(/[?&]reset=1/.test(location.search)){
-    try{ localStorage.removeItem(STORE_KEY); localStorage.removeItem(LAST_KEY); localStorage.removeItem(VIEW_KEY); localStorage.removeItem(PAD_KEY); localStorage.removeItem(BRANCH_KEY); LEGACY_KEYS.forEach(k=>localStorage.removeItem(k)); }catch(e){}
+    try{ localStorage.removeItem(STORE_KEY); localStorage.removeItem(LAST_KEY); localStorage.removeItem(VIEW_KEY); localStorage.removeItem(PAD_KEY); localStorage.removeItem(BRANCH_KEY); localStorage.removeItem(RUN_KEY); LEGACY_KEYS.forEach(k=>localStorage.removeItem(k)); }catch(e){}
+    /* 쿠키에 적어 둔 몫도 같이 지운다 — 안 지우면 되살아난다 */
+    try{ [LAST_KEY, VIEW_KEY, BRANCH_KEY].forEach(k=>{ document.cookie = k + '=;path=/;max-age=0'; }); }catch(e){}
     try{ first = idbClear(); }catch(e){}
     try{ if(window.caches && caches.keys) caches.keys().then(ks=>ks.forEach(k=>{ if(isMyCache(k)) caches.delete(k); })); }catch(e){}
     try{
@@ -8181,6 +8237,7 @@ function decideStartScreen(){
   first.catch(()=>{}).then(load).then(d=>{
     data = d;
     /* 한 단계가 실패해도 앱은 뜨게 한다. 실패한 단계는 기록해 두고 화면 아래에 보여준다. */
+    step('bumpRunCount', bumpRunCount);
     step('loadView', loadView);
     step('loadBranch', loadBranch);
     step('selectListFromUrl', selectListFromUrl);
