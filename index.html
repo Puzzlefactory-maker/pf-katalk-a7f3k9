@@ -161,6 +161,39 @@
     max-width:100%; }
   .msg-photo img { display:block; width:auto; max-width:100%; max-height:280px; height:auto; }
 
+  /* 파일 보낸 것처럼 보이는 카드 (제목 · 날짜 · 유효기간 · 용량).
+     실제 카카오톡처럼 어두운 화면에서도 카드는 흰색으로 둔다 */
+  .msg-file { background:#fff; border-radius:14px; padding:12px 14px; box-sizing:border-box;
+    display:flex; align-items:center; gap:10px; width:100%; cursor:default;
+    box-shadow:0 1px 3px rgba(0,0,0,.10); }
+  .msg-file .mf-main { flex:1; min-width:0; }
+  .msg-file .mf-name { font-size:14.5px; font-weight:700; color:#1a1a1a; line-height:1.35;
+    word-break:break-all; }
+  .msg-file .mf-row { font-size:12.5px; color:#5a5a5a; display:flex; gap:8px; line-height:1.55;
+    margin-top:3px; }
+  .msg-file .mf-k { color:#9a9a9a; flex-shrink:0; }
+  .msg-file .mf-v { min-width:0; word-break:break-all; }
+  .msg-file .mf-dl { width:34px; height:34px; border-radius:50%; background:#f1f2f4; color:#3a3a3a;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .msg-file .mf-dl svg { width:17px; height:17px; display:block; }
+
+  /* 관리자 — 사람마다 보이는 대화 범위 */
+  .vis-person { border:1px solid #e3e7ec; border-radius:10px; padding:8px 10px; margin-bottom:8px; }
+  .vis-head { display:flex; align-items:center; flex-wrap:wrap; gap:10px; font-size:13px; }
+  .vis-head label { display:flex; align-items:center; gap:4px; cursor:pointer; margin:0; }
+  .vis-head input { width:auto; }
+  .vis-pick { margin-top:8px; border-top:1px dashed #e3e7ec; padding-top:8px; }
+  .vis-tools { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:6px; }
+  .vis-list { max-height:260px; overflow-y:auto; border:1px solid #eef0f2; border-radius:8px; background:#fafbfc; }
+  .vis-row { display:flex; align-items:center; gap:7px; padding:5px 8px; font-size:12px;
+    border-bottom:1px solid #f0f2f4; cursor:pointer; margin:0; }
+  .vis-row:last-child { border-bottom:none; }
+  .vis-row.on { background:#eaf3ff; }
+  .vis-row input { width:auto; flex-shrink:0; }
+  .vis-when { color:#8a97a5; flex-shrink:0; white-space:nowrap; }
+  .vis-who { font-weight:700; color:#3a4a5a; flex-shrink:0; white-space:nowrap; }
+  .vis-txt { color:#55606b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+
   /* 사진 크게 보기 */
   #photoViewer { display:none; position:absolute; top:0;right:0;bottom:0;left:0; z-index:200; background:#000;
     align-items:center; justify-content:center; }
@@ -807,6 +840,90 @@
 .adbox .ad-img .ph>*+*{margin-top:3px}
 .chat-item>*+*{margin-left:14px}
 .chat-name-row>*+*{margin-left:5px}
+.chat-right>*+*{margin-top:6px}</style><style id="oldBrowserGap">.header .actions>*+*{margin-left:4px}
+.chat-right>*+*{margin-top:5px}
+.msg-stack>*+*{margin-top:4px}
+.msg-file>*+*{margin-left:10px}
+.msg-file .mf-row>*+*{margin-left:8px}
+.inputbar>*+*{margin-left:8px}
+.bp-row>*+*{margin-left:10px}
+.admin-body>*+*{margin-left:14px}
+.add-row>*+*{margin-left:8px}
+.add-row .left>*+*{margin-left:6px}
+.field.inline>*+*{margin-left:8px}
+.row-actions>*{margin-right:6px}
+.row-actions>*{margin-bottom:6px}
+.crumb>*{margin-right:8px}
+.crumb>*{margin-bottom:8px}
+.ppl-row>*+*{margin-left:10px}
+.ppl-head>*+*{margin-left:8px}
+.ppl-btns>*{margin-right:6px}
+.ppl-btns>*{margin-bottom:6px}
+.ppl-alias>*+*{margin-left:6px}
+.admin-list-item .top>*+*{margin-left:8px}
+.part-row>*+*{margin-left:11px}
+.part-name>*+*{margin-left:6px}
+.part-actions>*{margin-right:5px}
+.part-actions>*{margin-bottom:5px}
+.msg-editor .er1>*+*{margin-left:8px}
+.msg-editor .er2>*+*{margin-left:8px}
+.msg-editor .er3>*+*{margin-left:12px}
+.msg-editor .er3 label>*+*{margin-left:5px}
+.msg-editor .er4>*+*{margin-left:8px}
+.confirm-actions>*+*{margin-left:8px}
+#listScreen .header .actions>*+*{margin-left:0px}
+.chips>*+*{margin-left:8px}
+.adbox>*+*{margin-left:12px}
+.adbox .ad-top>*+*{margin-left:5px}
+.adbox .ad-foot>*+*{margin-left:5px}
+.adbox .ad-img .ph>*+*{margin-top:3px}
+.chat-item>*+*{margin-left:14px}
+.chat-name-row>*+*{margin-left:5px}
+.chat-right>*+*{margin-top:6px}</style><style id="oldBrowserGap">.header .actions>*+*{margin-left:4px}
+.chat-right>*+*{margin-top:5px}
+.msg-stack>*+*{margin-top:4px}
+.msg-file>*+*{margin-left:10px}
+.msg-file .mf-row>*+*{margin-left:8px}
+.vis-head>*{margin-right:10px}
+.vis-head>*{margin-bottom:10px}
+.vis-head label>*+*{margin-left:4px}
+.vis-tools>*{margin-right:6px}
+.vis-tools>*{margin-bottom:6px}
+.vis-row>*+*{margin-left:7px}
+.inputbar>*+*{margin-left:8px}
+.bp-row>*+*{margin-left:10px}
+.admin-body>*+*{margin-left:14px}
+.add-row>*+*{margin-left:8px}
+.add-row .left>*+*{margin-left:6px}
+.field.inline>*+*{margin-left:8px}
+.row-actions>*{margin-right:6px}
+.row-actions>*{margin-bottom:6px}
+.crumb>*{margin-right:8px}
+.crumb>*{margin-bottom:8px}
+.ppl-row>*+*{margin-left:10px}
+.ppl-head>*+*{margin-left:8px}
+.ppl-btns>*{margin-right:6px}
+.ppl-btns>*{margin-bottom:6px}
+.ppl-alias>*+*{margin-left:6px}
+.admin-list-item .top>*+*{margin-left:8px}
+.part-row>*+*{margin-left:11px}
+.part-name>*+*{margin-left:6px}
+.part-actions>*{margin-right:5px}
+.part-actions>*{margin-bottom:5px}
+.msg-editor .er1>*+*{margin-left:8px}
+.msg-editor .er2>*+*{margin-left:8px}
+.msg-editor .er3>*+*{margin-left:12px}
+.msg-editor .er3 label>*+*{margin-left:5px}
+.msg-editor .er4>*+*{margin-left:8px}
+.confirm-actions>*+*{margin-left:8px}
+#listScreen .header .actions>*+*{margin-left:0px}
+.chips>*+*{margin-left:8px}
+.adbox>*+*{margin-left:12px}
+.adbox .ad-top>*+*{margin-left:5px}
+.adbox .ad-foot>*+*{margin-left:5px}
+.adbox .ad-img .ph>*+*{margin-top:3px}
+.chat-item>*+*{margin-left:14px}
+.chat-name-row>*+*{margin-left:5px}
 .chat-right>*+*{margin-top:6px}</style></head>
 <body>
 <div id="phone" style="--safe-b: 0px;">
@@ -838,7 +955,7 @@
       <div class="tab active" title="채팅">
         <div class="tab-ico">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.7 1.7 5.1 4.3 6.5-.2.9-.7 2.4-1 3.1-.1.4.3.7.6.5 1.4-.6 3.2-1.5 4.1-2.1.6.1 1.3.1 2 .1 5.5 0 10-3.6 10-8s-4.5-8-10-8z"></path></svg>
-          <span class="tab-badge hidden" id="chatTabBadge">1</span>
+          <span class="tab-badge hidden" id="chatTabBadge">2</span>
         </div>
       </div>
       <div class="tab" title="오픈채팅">
@@ -860,10 +977,10 @@
   <div class="screen" id="roomScreen">
     <div class="header">
       <button class="back" id="btnBack">‹</button>
-      <div class="title" id="roomTitle">윤대표</div>
+      <div class="title" id="roomTitle">백도령</div>
     </div>
     <div class="messages" id="messages"></div>
-    <div class="float-date" id="floatDate"><span>2026년 1월 10일 토요일</span></div>
+    <div class="float-date" id="floatDate"><span>2025년 2월 20일 목요일</span></div>
     <div class="inputbar">
       <span class="plus">＋</span>
       <div class="fake-input">메시지 입력</div>
@@ -899,7 +1016,7 @@
         <button id="adminClose">닫기</button>
       </div>
     </div>
-    <div class="admin-body" id="adminBody"><div class="apane" id="paneHome"></div><div class="apane" id="paneRoom"></div><div class="apane" id="paneMsgs"></div></div>
+    <div class="admin-body room-open" id="adminBody"><div class="apane" id="paneHome"></div><div class="apane" id="paneRoom"></div><div class="apane" id="paneMsgs"></div></div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -927,7 +1044,7 @@
    ============================================================ */
 
 /*__CS_DATA_START__ 아래 두 줄이 이 파일에 들어있는 대화 내용입니다. */
-const DATA_VERSION = "2026-10-06-105010";
+const DATA_VERSION = "2026-10-06-170859";
 const EMBEDDED_DATA = {
  "appName": "카카오톡",
  "tree": [
@@ -980,6 +1097,19 @@ const EMBEDDED_DATA = {
      "name": "분신사바",
      "lists": [
       "부평점_분신사바"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "trss",
+   "name": "성수점",
+   "children": [
+    {
+     "id": "trss1",
+     "name": "폐공장",
+     "lists": [
+      "성수점_폐공장"
      ]
     }
    ]
@@ -6532,7 +6662,7 @@ const EMBEDDED_DATA = {
      "silo": 0
     },
     {
-     "id": "pk4r7js",
+     "id": "pk4r7js_2",
      "name": "새 인물",
      "avatar": "",
      "silo": 1
@@ -6573,6 +6703,1055 @@ const EMBEDDED_DATA = {
     "강남2호점_새_중분류"
    ],
    "today": "2020-02-22"
+  },
+  {
+   "key": "성수점_폐공장",
+   "label": "폐공장",
+   "title": "채팅",
+   "chipText": "ChatGPT",
+   "bottomPad": 0,
+   "ad": {
+    "show": true,
+    "top": "퍼즐팩토리 · 지금 예약 가능",
+    "head": "국내 최초 크라임씬카페 퍼즐팩토리",
+    "foot": "광고입니다. 사건 접수 중",
+    "img": "",
+    "logo": ""
+   },
+   "today": "2025-07-15",
+   "unified": true,
+   "aliases": [],
+   "aliasMe": {},
+   "people": [
+    {
+     "name": "이작가",
+     "avatar": "",
+     "silo": 0,
+     "id": "p1kyppdp"
+    },
+    {
+     "name": "박피디",
+     "avatar": "",
+     "silo": 1,
+     "id": "p1dmk9ow"
+    },
+    {
+     "name": "한서린",
+     "avatar": "",
+     "silo": 0,
+     "id": "pd7cgk0"
+    },
+    {
+     "name": "백도령",
+     "avatar": "",
+     "silo": 1,
+     "id": "p1spdtt0"
+    },
+    {
+     "name": "고작가",
+     "avatar": "",
+     "silo": 0,
+     "id": "p1tc7i30"
+    },
+    {
+     "name": "염주도사",
+     "avatar": "",
+     "silo": 1,
+     "id": "p1ffts4g"
+    },
+    {
+     "name": "허니기획 최대표",
+     "avatar": "",
+     "silo": 0,
+     "id": "p1ed7888"
+    },
+    {
+     "name": "엄마",
+     "avatar": "",
+     "silo": 1,
+     "id": "p5u02xg"
+    },
+    {
+     "name": "미연",
+     "avatar": "",
+     "silo": 0,
+     "id": "p1bkotig"
+    },
+    {
+     "name": "하니",
+     "avatar": "",
+     "silo": 1,
+     "id": "p2cyvfk"
+    },
+    {
+     "name": "연우",
+     "avatar": "",
+     "silo": 0,
+     "id": "pnk4y0w"
+    }
+   ],
+   "rooms": [
+    {
+     "id": "pfr1",
+     "name": "",
+     "isGroup": false,
+     "participants": [
+      {
+       "id": "pfp101",
+       "name": "이작가"
+      },
+      {
+       "id": "pfp102",
+       "name": "박피디"
+      }
+     ],
+     "messages": [
+      {
+       "id": "xbq9tvdh",
+       "senderName": "이작가",
+       "text": "피디님, 이번에 괜찮은 사람 하나 있어요. 백도령이라는 친구인데, 진짜 신내림 받은 무속인이에요. 잘생겼고 말빨도 좋아요.",
+       "image": "",
+       "time": "오후 2:30",
+       "date": "2024-01-06",
+       "unread": 0
+      },
+      {
+       "id": "x1z0gqy1",
+       "senderName": "박피디",
+       "text": "백도령? 이름부터 컨셉 강하네ㅋㅋ",
+       "image": "",
+       "time": "오후 2:32",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xql0ziv3",
+       "senderName": "이작가",
+       "text": "최근엔 유튜브에서 살짝 떴어요. 신내림 받은지 얼마 안 돼서 신발도 좋더라고요!",
+       "image": "",
+       "time": "오후 2:33",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xy694o1o",
+       "senderName": "박피디",
+       "text": "그럼 다음 주 미팅 잡아줘요. 괜찮으면 바로 투입시켜서 촬영 들어가면 되겠네요! 고마워요 이작가님!",
+       "image": "",
+       "time": "오후 2:35",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm105",
+       "senderName": "이작가",
+       "text": "",
+       "image": "",
+       "file": {
+        "name": "[촬영 구성안] 폐공장 체험(최종)_0714",
+        "date": "",
+        "expire": "~2025. 7. 18.",
+        "size": "804 KB"
+       },
+       "time": "오후 11:30",
+       "date": "2025-07-14",
+       "unread": 0
+      },
+      {
+       "id": "pfm106",
+       "senderName": "이작가",
+       "text": "피디님, 내일 촬영 대본 보내요.\n피디님 촬영 스타일이 리얼감 있고\n라이브한 날 그림 좋아하는 거 아는데\n내일은 재촬영도 안 되고\n발동되는 장치도 많고\n체크해야하는 소품도 많으니\n이번에는 꼭 좀 대본 읽고 와주세요!!!",
+       "image": "",
+       "time": "오후 11:30",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm107",
+       "senderName": "박피디",
+       "text": "지금 촬영 들어갑니다.",
+       "image": "",
+       "time": "오후 10:30",
+       "date": "2025-07-15",
+       "unread": 1
+      }
+     ],
+     "per": {
+      "p1kyppdp": {
+       "unread": 0
+      }
+     }
+    },
+    {
+     "id": "pfr2",
+     "name": "",
+     "isGroup": false,
+     "participants": [
+      {
+       "id": "pfp201",
+       "name": "이작가"
+      },
+      {
+       "id": "pfp202",
+       "name": "백도령"
+      }
+     ],
+     "messages": [
+      {
+       "id": "pfm201",
+       "senderName": "이작가",
+       "text": "점남아, 넌 이제부터\n신발이 너무 좋은 무당 백도령이야",
+       "image": "",
+       "time": "오후 9:30",
+       "date": "2024-01-10",
+       "unread": 0
+      },
+      {
+       "id": "pfm202",
+       "senderName": "이작가",
+       "text": "\"촉있당 TV\" 채널 개설했어.\n넌 그냥 대본 읽기만 해.\n너 배우되고 싶어 했잖아 너 잘하는 연기하면 돼!\n신들린 연기!",
+       "image": "",
+       "time": "오후 9:30",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm203",
+       "senderName": "백도령",
+       "text": "대본대로 읽는 거야 어렵지 않죠!\n내용에는 아무 문제없는 거죠?",
+       "image": "",
+       "time": "오후 9:32",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm204",
+       "senderName": "이작가",
+       "text": "내로라 하는 무당들한테 사주 미리 받았어.\n마리보살, 반려도사, 도화선녀, 부채도사까지.\n제값 주고받은 사주니까 무조건 대박 나야 해.",
+       "image": "",
+       "time": "오후 9:32",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm205",
+       "senderName": "이작가",
+       "text": "(참고로 너랑 주고받는 연락은 실시간으로\n지우고 있으니까 보안은 걱정말고…!)",
+       "image": "",
+       "time": "오후 9:33",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm206",
+       "senderName": "백도령",
+       "text": "네 알겠습니다!!!\n좋은 기회 주셨는데\n제대로 살려보겠습니다 누나~^^",
+       "image": "",
+       "time": "오후 9:35",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm207",
+       "senderName": "이작가",
+       "text": "그렇지! 무속은 분위기야.\n\"아.. 보여요\" 이런 느낌 알지?",
+       "image": "",
+       "time": "오후 9:37",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm208",
+       "senderName": "백도령",
+       "text": "알죠!\n저 촉 좋은 거 아시잖아요!",
+       "image": "",
+       "time": "오후 9:38",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm209",
+       "senderName": "이작가",
+       "text": "점남아, 다음 촬영 땐 진짜 신 들린 사람처럼 연기해.\n눈 흔들리고, 귀신 보는 것처럼. 안 그러면 안 터져.",
+       "image": "",
+       "time": "오후 11:30",
+       "date": "2024-02-20",
+       "unread": 0
+      },
+      {
+       "id": "pfm210",
+       "senderName": "백도령",
+       "text": "작가님, 저... 그 정도까지는 좀...\n요즘 촬영도 많고, 적당히 해도 되지 않을까요?\n조금 힘드네요",
+       "image": "",
+       "time": "오후 11:31",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm211",
+       "senderName": "이작가",
+       "text": "적당히...?\n지금 방송 좀 타고 얼굴 알려지더니 반항하는 거야?\n그동안 내가 써준 대본, 콘셉트 더분에 여기까지 온 거잖아.",
+       "image": "",
+       "time": "오후 11:32",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm212",
+       "senderName": "이작가",
+       "text": "사람들이 너 과거 호스트바 출신인 거 알면 좋아해줄 거 같냐?\n다 까도 돼. 나 자료 다 있어.",
+       "image": "",
+       "time": "오후 11:33",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm213",
+       "senderName": "백도령",
+       "text": "그런 의도 아니었고…\n그냥 수익 배분 조금만 조정되면 안 될까 해서요.\n촬영 준비도 제가 다 하니까 비용적으로 많이 부담이 돼서요.",
+       "image": "",
+       "time": "오후 11:34",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm214",
+       "senderName": "이작가",
+       "text": "말도 안 되는 소리 하지마.\n지금 이렇게 돈 벌게 해준 게 누군데!\n그냥 대본대로 읽고, 신들린 연기만 잘 해.\n그게 너 할 일이야.",
+       "image": "",
+       "time": "오후 11:35",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm215",
+       "senderName": "백도령",
+       "text": "...알겠습니다.",
+       "image": "",
+       "time": "오후 11:37",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm216",
+       "senderName": "이작가",
+       "text": "계약서 내용 다시 정리했으니까\n7월 15일 촬영 날 원본에 서명해서 가져와.",
+       "image": "",
+       "time": "오후 10:40",
+       "date": "2025-07-10",
+       "unread": 0
+      },
+      {
+       "id": "pfm217",
+       "senderName": "백도령",
+       "text": "작가님... 계약 내용이 너무 심한데요.\n9:1 수익 배분에다 해지도 마음대로 못 하고...\n이건 너무 불공정한 거 아닙니까?",
+       "image": "",
+       "time": "오후 10:41",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm218",
+       "senderName": "이작가",
+       "text": "불공정...?\n네 과거가 더 불공정한 처사지.",
+       "image": "",
+       "time": "오후 10:42",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm219",
+       "senderName": "이작가",
+       "text": "네가 어디서 뭘 했고, 누굴 상대했는지,\n내용 싹 정리해서 촉있당 TV에 업로드 해줄 수도있어.",
+       "image": "",
+       "time": "오후 10:43",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm220",
+       "senderName": "백도령",
+       "text": "진짜 너무 하신 거 아니에요?\n모든 사실 밝혀지면 작가님한테도\n좋을 건 없잖아요!",
+       "image": "",
+       "time": "오후 10:44",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm221",
+       "senderName": "이작가",
+       "text": "이미 얼굴이 알려질 대로 알려진\n너한테 더 손해일까?\n아님 일반인인 내가 더 손해일까?\n넌 지금까지 내가 만든 캐릭터 덕에 먹고 살았어.\n그걸 없앨 수 있는 사람도 나뿐이라고!!",
+       "image": "",
+       "time": "오후 10:45",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm222",
+       "senderName": "백도령",
+       "text": "하아...알겠습니다.\n서명해서 준비하겠습니다.",
+       "image": "",
+       "time": "오후 10:45",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm223",
+       "senderName": "이작가",
+       "text": "<7/15 촬영 내용>\n - 오프닝: 미션 확인, 입장하면 입구 봉쇄\n - 폐공장 대표실: 모니터에서 미션 확인\n   (*모니터 장치 발동 예정)\n - 작업실①: 마네킹 의상 주머니 속 미션지 확인\n   (*마네킹 장치 발동 예정)\n - 작업실②: 도르래에 열쇠 입구 획득\n   (*현장에 벽돌, 쇠망치, 쇠파이프 등 소품 다수 있음)\n - 클로징: 폐공장 탈출 후 소감",
+       "image": "",
+       "time": "오후 11:10",
+       "date": "2025-07-14",
+       "unread": 0
+      },
+      {
+       "id": "pfm224",
+       "senderName": "이작가",
+       "text": "촬영은 대충 이렇게 진행될 거고\n내가 안에서 귀신 역할 할 예정이니까\n넌 기운이 느껴진다거나 뭔가 보였다는 멘트 계속 해줘.\n실감나는 빙의 연기하면 더 좋고 그리고 중간중간\n한서린 리액션 따야 하니까 일부러 놀래켜주고",
+       "image": "",
+       "time": "오후 11:11",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm225",
+       "senderName": "백도령",
+       "text": "내용 확인했어요.",
+       "image": "",
+       "time": "오후 11:20",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm226",
+       "senderName": "이작가",
+       "text": "올 때 커피 좀 늘 먹던 걸로",
+       "image": "",
+       "time": "오후 7:05",
+       "date": "2025-07-15",
+       "unread": 0
+      },
+      {
+       "id": "pfm227",
+       "senderName": "백도령",
+       "text": "알겠어요.\n스타벅스 아이스 바닐라 빈 라떼 그란데\n에스프레소 1샷 추가해서 총 3샷\n바닐라 시럽은 하프만, 우유는 두유로 변경\n얼음은 적게, 휘핑 크림 라이트로 추가\n드리즐은 캐러멜 말고, 모카로 변경하는데\n컵 안쪽으로만 플라스틱 빨대와 리드 뚜껑으로 요청\n레귤러 샷으로 유지 이거 맞죠?",
+       "image": "",
+       "time": "오후 7:07",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm228",
+       "senderName": "이작가",
+       "text": "ㅇㅇ",
+       "image": "",
+       "time": "오후 7:10",
+       "date": "",
+       "unread": 0
+      }
+     ],
+     "per": {
+      "p1spdtt0": {
+       "unread": 0
+      }
+     },
+     "vis": {
+      "p1kyppdp": {
+       "mode": "some",
+       "msgs": [
+        "pfm226",
+        "pfm227",
+        "pfm228"
+       ]
+      }
+     }
+    },
+    {
+     "id": "pfr3",
+     "name": "",
+     "isGroup": false,
+     "participants": [
+      {
+       "id": "pfp301",
+       "name": "이작가"
+      },
+      {
+       "id": "pfp302",
+       "name": "한서린"
+      }
+     ],
+     "messages": [
+      {
+       "id": "pfm301",
+       "senderName": "이작가",
+       "text": "이번 녹화 때 입고 갈 옷이 필요한데\n입을 만한 거 없니?",
+       "image": "",
+       "time": "오후 3:00",
+       "date": "2025-05-10",
+       "unread": 0
+      },
+      {
+       "id": "pfm302",
+       "senderName": "한서린",
+       "text": "아... 원하시는 게 있을까요?",
+       "image": "",
+       "time": "오후 3:03",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm303",
+       "senderName": "이작가",
+       "text": "이번에 샤넬에서 신상 자켓 나왔다더라\n오픈런 해야 한다고 하니 한번 구해와봐",
+       "image": "",
+       "time": "오후 3:07",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm304",
+       "senderName": "한서린",
+       "text": "제가 아직 정산 받은 게 없어서\n좀 힘들 것 같아요ㅠㅠ\n다른 건 안될까요?",
+       "image": "",
+       "time": "오후 3:15",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm305",
+       "senderName": "이작가",
+       "text": "회사에 말해서라도 구해와야지\n어디 안된다는 말이 나와!\n이것도 같이 구해와!",
+       "image": "",
+       "time": "오후 3:16",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm306",
+       "senderName": "이작가",
+       "text": "",
+       "image": "data:image/jpeg;base64,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",
+       "time": "오후 3:16",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm307",
+       "senderName": "이작가",
+       "text": "너 저번에 신은 구찌 신발 예쁘더라\n다음 촬영 때 가지고 와",
+       "image": "",
+       "time": "오후 9:30",
+       "date": "2025-06-15",
+       "unread": 0
+      },
+      {
+       "id": "pfm308",
+       "senderName": "한서린",
+       "text": "그게 제게 아니라 협찬이라서 반납해서\n어려울 것 같아요ㅠㅠ 죄송합니다.",
+       "image": "",
+       "time": "오후 9:35",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm309",
+       "senderName": "이작가",
+       "text": "돈 없으면 일을 잘하든가,\n일을 못하면 돈이라도 잘 쓰든가\n둘 중 하나는 해야지",
+       "image": "",
+       "time": "오후 9:36",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm310",
+       "senderName": "한서린",
+       "text": "정말 사드리고 싶지만 제 사정 아시잖아요...\n이 프로그램으로 잘 되면 꼭 사드릴게요",
+       "image": "",
+       "time": "오후 9:40",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm311",
+       "senderName": "이작가",
+       "text": "데이트&데스로 잘되면?\n그땐 저거 가지고 되겠어?",
+       "image": "",
+       "time": "오후 9:47",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm312",
+       "senderName": "한서린",
+       "text": "제가 대출이나 신용카드 발급도 안 돼서요…\n명품은 구매가 힘들 것 같아요ㅠㅠ\n촬영장에서 시키는 건 뭐든 다 하겠습니다!",
+       "image": "",
+       "time": "오후 9:50",
+       "date": "",
+       "unread": 0
+      }
+     ],
+     "per": {
+      "p1kyppdp": {
+       "unread": 0
+      }
+     },
+     "only": []
+    },
+    {
+     "id": "pfr4",
+     "name": "",
+     "isGroup": false,
+     "participants": [
+      {
+       "id": "pfp401",
+       "name": "박피디"
+      },
+      {
+       "id": "pfp402",
+       "name": "고작가"
+      }
+     ],
+     "messages": [
+      {
+       "id": "pfm401",
+       "senderName": "고작가",
+       "text": "오늘부터 피디님과 사귀는 1일이라니\n아직도 믿겨 지지 않아요♥",
+       "image": "",
+       "time": "오후 11:30",
+       "date": "2023-01-01",
+       "unread": 0
+      },
+      {
+       "id": "pfm402",
+       "senderName": "박피디",
+       "text": "믿어도 돼! 앞으로 매일 꿈같은\n하루하루를 보내게 해줄게 사랑해♥",
+       "image": "",
+       "time": "오후 11:32",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm403",
+       "senderName": "박피디",
+       "text": "너랑 마시는 커피는 늘 영화야.\n엔딩이 어딘지 몰라도, 너랑이면 다 좋아.",
+       "image": "",
+       "time": "오전 10:20",
+       "date": "2023-03-14",
+       "unread": 0
+      },
+      {
+       "id": "pfm404",
+       "senderName": "고작가",
+       "text": "저도 마찬가지에요 ♥\n매일 이렇게 함께 했으면 좋겠어요!\n사랑해요 피디님!",
+       "image": "",
+       "time": "오전 10:23",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm405",
+       "senderName": "고작가",
+       "text": "피디님, 오늘도 대본보다 당신 눈빛이 더 진했어요.\n고쳐야 할 건 대사보다, 내 심장 박동수일지도.",
+       "image": "",
+       "time": "오후 5:20",
+       "date": "2023-05-09",
+       "unread": 0
+      },
+      {
+       "id": "pfm406",
+       "senderName": "박피디",
+       "text": "그건 나도 마찬가지야♥\n너를 향한 심박 박동수는 고치고 싶지 않아",
+       "image": "",
+       "time": "오후 5:23",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm407",
+       "senderName": "박피디",
+       "text": "캐롤보다 더 반짝이는 당신.\n올해의 선물은 당신 하나면 충분해♥",
+       "image": "",
+       "time": "오후 1:30",
+       "date": "2023-12-25",
+       "unread": 0
+      },
+      {
+       "id": "pfm408",
+       "senderName": "고작가",
+       "text": "내년에도 나만의 크리스마스 선물이 되어줘요!\n사랑해요♥",
+       "image": "",
+       "time": "오후 1:35",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm409",
+       "senderName": "고작가",
+       "text": "나한텐 언제나 당신이 최고의 연출이에요.\n거짓말처럼 웃게 해줘서 고마워요.",
+       "image": "",
+       "time": "오전 11:30",
+       "date": "2024-05-11",
+       "unread": 0
+      },
+      {
+       "id": "pfm410",
+       "senderName": "박피디",
+       "text": "나야말로 당신 생각만 하면 웃음이 절로 나와!\n항상 나의 웃음꽃이 되어줘♥",
+       "image": "",
+       "time": "오전 11:30",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm411",
+       "senderName": "고작가",
+       "text": "피디님… 저희 프로그램 때문에 사람이 죽었습니다.\n제가… 그렇게 만든 거 같아서 너무 괴로워요",
+       "image": "",
+       "time": "오후 3:30",
+       "date": "2024-08-05",
+       "unread": 0
+      },
+      {
+       "id": "pfm412",
+       "senderName": "박피디",
+       "text": "아니야. 절대 그렇게 생각하지 마!\n인생을 살아가다보면\n전혀 예상하지 못한 일이 닥치곤 해",
+       "image": "",
+       "time": "오후 3:31",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm413",
+       "senderName": "고작가",
+       "text": "자꾸… 대표님의 눈빛이 떠오릅니다.\n제가 어떻게든 진실을 밝혀냈어야 했는데...\n그러지 못한 것 같아서 너무 미안해요",
+       "image": "",
+       "time": "오후 3:33",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm414",
+       "senderName": "박피디",
+       "text": "절대 네 탓 아니야\n오늘까지만 슬퍼하고\n내일부터 훌훌 털어버리자",
+       "image": "",
+       "time": "오후 3:35",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm415",
+       "senderName": "고작가",
+       "text": "제가 계속 이 일을 해도 될까요…\n더 망가지는 건 아닐까요…",
+       "image": "",
+       "time": "오후 3:37",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm416",
+       "senderName": "박피디",
+       "text": "너무 힘들면 좀 쉬면서 생각해보자\n요즘 네가 몸도 마음도 쉬지 못해서\n그런 생각이 더 드는 거야",
+       "image": "",
+       "time": "오후 3:38",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "pfr5",
+     "name": "",
+     "isGroup": false,
+     "participants": [
+      {
+       "id": "pfp501",
+       "name": "한서린"
+      },
+      {
+       "id": "pfp502",
+       "name": "엄마"
+      }
+     ],
+     "messages": [
+      {
+       "id": "pfm501",
+       "senderName": "엄마",
+       "text": "서린아, 방금 집으로 또 이상한 우편이 왔어…\n빨간 글씨로 '독촉장'이라고 적혀 있더라.\n대출 돈 갚으라는 독촉장인 것 같아",
+       "image": "",
+       "time": "오전 10:43",
+       "date": "2025-05-20",
+       "unread": 0
+      },
+      {
+       "id": "pfm502",
+       "senderName": "한서린",
+       "text": "엄마, 그거 버리지 말고 나한테 우편으로 보내줘\n내용 확인해봐야 할 것 같아.",
+       "image": "",
+       "time": "오전 10:45",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm503",
+       "senderName": "엄마",
+       "text": "응, 지금 오늘 바로 보낼게.\n근데 이런 게 자꾸 오니까 너무 불안하다, 서린아…",
+       "image": "",
+       "time": "오전 10:46",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm504",
+       "senderName": "한서린",
+       "text": "엄마 걱정 마.\n내가 다 확인하고 처리할게.\n엄마는 끼니 거르지 마시고, 건강 잘 챙겨요!",
+       "image": "",
+       "time": "오전 10:47",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm505",
+       "senderName": "엄마",
+       "text": "서린아, 아빠가 엄마한테 선물로 준\n디기탈리스 꽃 알지?\n엄마 상황상 그걸 키울 수가 없어서\n너희 집에 가져다 놨어!\n너도 바쁘겠지만,\n잠시만 맡아서 키워줄 수 있을까?",
+       "image": "",
+       "time": "오전 9:47",
+       "date": "2025-06-01",
+       "unread": 0
+      },
+      {
+       "id": "pfm506",
+       "senderName": "한서린",
+       "text": "알겠어! 엄마가 좋아했던 꽃이니까\n내가 틈틈이 잘 키워볼게!",
+       "image": "",
+       "time": "오전 10:10",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "pfr6",
+     "name": "",
+     "isGroup": false,
+     "participants": [
+      {
+       "id": "pfp601",
+       "name": "한서린"
+      },
+      {
+       "id": "pfp602",
+       "name": "허니기획 최대표"
+      }
+     ],
+     "messages": [
+      {
+       "id": "pfm601",
+       "senderName": "허니기획 최대표",
+       "text": "서린아. 요즘 우리 회사도 힘들고 너도 알잖아.\n솔직히 너도 방송 들어가는 거 하나 없고…\nA엔터 대표님, B건설 회장님도 너 보고 싶어하시더라.\n밥만 먹고 차만 마시는 자리야.\n한번 만나보는 거 어떻겠니?",
+       "image": "",
+       "time": "오후 5:40",
+       "date": "2025-01-25",
+       "unread": 0
+      },
+      {
+       "id": "pfm602",
+       "senderName": "한서린",
+       "text": "대표님, 죄송해요.\n아무리 힘들어도…\n그런 자리는 못 나갈거 같아요",
+       "image": "",
+       "time": "오후 5:45",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm603",
+       "senderName": "허니기획 최대표",
+       "text": "지금 찬밥 더운밥 가릴 때야!\n다 밖으로 나 앉는 꼴을 봐야 정신 차릴래?\n지금 너희한테 투자한 게 얼만데!!\n멀쩡한 스케줄도 없는데 어느 세월에 메꿀려고!",
+       "image": "",
+       "time": "오후 5:50",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm604",
+       "senderName": "한서린",
+       "text": "제가 다른 알바, 막노동이라도\n뛰어서라도 갚을게요!!\n그러니까 제발 그런 자리는 만들지 말아주세요!",
+       "image": "",
+       "time": "오후 5:55",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm605",
+       "senderName": "허니기획 최대표",
+       "text": "그런 자리라고 다 이상한 건 아니다.\n높으신 분들이 다 너 예뻐해주려고 그러는 거야!\n믿는 구석도 없이 다 싫다고만 하면 뭐 먹고 살래?",
+       "image": "",
+       "time": "오후 6:00",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm606",
+       "senderName": "한서린",
+       "text": "그래도… 그렇게는 못 살아요.\n차라리 죽는 게 나아요… 그러니까 대표님…\n그런 제안은 하지 말아주세요…!",
+       "image": "",
+       "time": "오후 6:01",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "pfr7",
+     "name": "허니걸즈 4",
+     "isGroup": true,
+     "participants": [
+      {
+       "id": "pfp701",
+       "name": "한서린"
+      },
+      {
+       "id": "pfp702",
+       "name": "미연"
+      },
+      {
+       "id": "pfp703",
+       "name": "하니"
+      },
+      {
+       "id": "pfp704",
+       "name": "연우"
+      }
+     ],
+     "messages": [
+      {
+       "id": "pfm701",
+       "senderName": "미연",
+       "text": "나 진짜 방금 무슨 얘기 들었는지 말해도 돼...?\n진짜 말도 안 돼...",
+       "image": "",
+       "time": "오후 5:23",
+       "date": "2025-02-20",
+       "unread": 0
+      },
+      {
+       "id": "pfm702",
+       "senderName": "하니",
+       "text": "뭐야 뭐야 또 무슨 일인데ㅠㅠㅠㅠ\n대기실에서 누가 또 우리 욕했어??",
+       "image": "",
+       "time": "오후 5:25",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm703",
+       "senderName": "미연",
+       "text": "아니 그게...\n촬영 대기하면서 화장실 갔다가 복도 옆 창고 문 열려 있어서 그냥 물 마시면서 들었는데...\n이작가랑 어떤 아저씨가 대화 중이더라?",
+       "image": "",
+       "time": "오후 5:25",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm704",
+       "senderName": "연우",
+       "text": "헐... 몰래 엿들은 거야...?\n무서워 어떡해 😰",
+       "image": "",
+       "time": "오후 5:25",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm705",
+       "senderName": "미연",
+       "text": "응...그 아저씨, 마라엔터 손팀장이래\n대놓고 허니걸즈는 무리죠~ 예능감도 부족하고 이러고 이작가가 명품백이랑 입금됐다면서 이번에 데뷔한 보이그룹 마라탕후루 쪽으로 밀어준대…!",
+       "image": "",
+       "time": "오후 5:25",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm706",
+       "senderName": "한서린",
+       "text": "혼자서 그걸 들었어?\n많이 속상했겠네…\n괜히 내가 미안해 애들아",
+       "image": "",
+       "time": "오후 5:27",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm707",
+       "senderName": "하니",
+       "text": "그게 왜 언니 잘못이야… 언니가 우리 팀 알리려고 얼마나 노력하는 거 다 아는데 ㅠㅠ",
+       "image": "",
+       "time": "오후 5:28",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm708",
+       "senderName": "미연",
+       "text": "맞아… 그걸 이용하려는 사람들이 나쁜 거지\n진짜... 너무 열 받고 어이없어서 말도 안 나와.",
+       "image": "",
+       "time": "오후 5:30",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm709",
+       "senderName": "연우",
+       "text": "진짜로… 이작가라는 사람 이 바닥에선 입김 장난 아니래…\n여기저기서 돈 받고 빽으로 방송 꽂아준대…\n어떻게 우리도 안되나…!",
+       "image": "",
+       "time": "오후 5:31",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "pfm710",
+       "senderName": "한서린",
+       "text": "힘들겠지만 그런 생각은 하지 말자!\n지금 우리가 무너지면, 걔네가 원하는 그림이야.\n다들 힘든 거 알아\n우리 넷이 함께라면 뭐든 할 수 있을거야!",
+       "image": "",
+       "time": "오후 5:32",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "xxah0zhv",
+     "name": "",
+     "isGroup": false,
+     "per": {},
+     "participants": [
+      {
+       "id": "xt7bhbpv",
+       "name": "백도령"
+      },
+      {
+       "id": "xsl4ijgg",
+       "name": "염주도사"
+      }
+     ],
+     "messages": [
+      {
+       "id": "x5ajm9cz",
+       "senderName": "백도령",
+       "text": "도사님, 재물운 들어오는 염주 팔찌랑 길운 들어오는 팔찌 제작해주세요.",
+       "image": "",
+       "time": "오전 9:30",
+       "date": "2023-12-20",
+       "unread": 0
+      },
+      {
+       "id": "x5lz0181",
+       "senderName": "염주도사",
+       "text": "재물운 18개, 길운은 염주 구슬 21개 들어갑니다.",
+       "image": "",
+       "time": "오전 10:00",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    }
+   ]
   }
  ],
  "adDefault": {
@@ -6588,7 +7767,7 @@ const EMBEDDED_DATA = {
 
 /* 코드(기능) 버전. 데이터와 별개로 “이 파일의 프로그램이 언제 것인지”를 나타낸다.
    관리자 정보란에 표시되므로, 폰에 옛 파일이 올라갔는지 바로 알 수 있다. */
-const CODE_VERSION = '2026-10-02-AJ (어두운 테마)';
+const CODE_VERSION = '2026-10-06-AO (사람마다 보이는 대화 범위)';
 
 const STORE_KEY = 'crimescene_kakao_v2';
 const LEGACY_KEYS = ['crimescene_kakao_v1'];
@@ -6931,12 +8110,33 @@ function normalize(d){
         c++;
       });
       if(room.per && typeof room.per !== 'object') room.per = {};
+      /* 사람마다 보이는 범위 — 쓸모없어진 항목은 치운다 */
+      if(room.vis !== undefined){
+        if(!room.vis || typeof room.vis !== 'object') delete room.vis;
+        else {
+          const ids = (room.messages||[]).map(m=> m && m.id);
+          Object.keys(room.vis).forEach(pid=>{
+            const v = room.vis[pid];
+            if(!v || (v.mode !== 'none' && v.mode !== 'some')){ delete room.vis[pid]; return; }
+            if(v.mode === 'some'){
+              v.msgs = (Array.isArray(v.msgs) ? v.msgs : []).filter(x=> ids.indexOf(x) >= 0);
+            } else { delete v.msgs; }
+          });
+          if(!Object.keys(room.vis).length) delete room.vis;
+        }
+      }
       room.messages.forEach(m=>{
         if(!m.id) m.id = id();
         if(m.text === undefined) m.text = '';
         if(m.image === undefined) m.image = '';
         if(m.time === undefined) m.time = '';
         if(m.date === undefined) m.date = '';
+        /* 첨부파일 칸만 열어 두고 아무것도 안 적은 것은 들고 다니지 않는다 */
+        if(m.file !== undefined){
+          const ok = m.file && typeof m.file === 'object' &&
+            ['name','date','expire','size'].some(k=> String(m.file[k]||'').trim());
+          if(!ok) delete m.file;
+        }
         m.unread = Number(m.unread)||0;
       });
     });
@@ -7078,9 +8278,19 @@ function ensurePeople(L){
   for(let i = L.people.length - 1; i >= 0; i--){
     if(!L.people[i] || typeof L.people[i] !== 'object') L.people.splice(i, 1);
   }
-  const byName = {};
+  /* id 가 겹친 채로 저장된 명단을 고친다.
+     (예전에는 “새 인물”을 만들어 이름을 바꾼 뒤 또 만들면 id 가 같아졌다.
+      id 가 같으면 삭제·이름변경이 앞사람에게 가 버린다.)
+     겹치면 뒤에 있는 사람의 id 만 새로 준다 — 앞사람을 가리키던 기존 연결은 건드리지 않는다. */
+  const byName = {}, usedId = {};
   L.people.forEach(p=>{
     if(!p.id) p.id = personId(p.name);
+    if(usedId[p.id]){
+      let pid = personId(p.name), n = 2;
+      while(usedId[pid] || L.people.some(x=> x !== p && x.id === pid)) pid = personId(p.name) + '_' + (n++);
+      p.id = pid;
+    }
+    usedId[p.id] = 1;
     if(p.avatar === undefined) p.avatar = '';
     if(p.silo === undefined) p.silo = 0;
     byName[normKey(p.name)] = p;
@@ -7120,6 +8330,16 @@ function personByName(L, name){
   const k = normKey(name);
   const ps = (L && L.people) || [];
   return k ? (ps.find(p=>p && normKey(p.name)===k) || null) : null;
+}
+/* 새로 만드는 인물에게 줄 id.
+   이름이 같아도 이미 쓰고 있는 id 면 뒤에 번호를 붙여 겹치지 않게 한다.
+   (이름을 바꿔도 id 는 그대로 두기 때문에 — 폰에서 고른 “나”를 지키려고 —
+    “새 인물”을 만들어 이름을 바꾼 뒤 또 만들면 id 가 겹칠 수 있다) */
+function newPersonId(L, name){
+  const ps = (L && L.people) || [];
+  let pid = personId(name), n = 2;
+  while(ps.some(x=> x && x.id === pid)) pid = personId(name) + '_' + (n++);
+  return pid;
 }
 /* 이 기기에서 고른 “나”. id 로 먼저 찾고, 못 찾으면 이름으로 찾아 고쳐 둔다
    (내용을 새 파일로 바꿔도 폰에서 고른 사람이 그대로 유지된다) */
@@ -7174,9 +8394,49 @@ function inRoom(room, name){
 /* 기본은 참여자 모두의 폰에 보인다.
    room.only 에 사람을 지정하면 그 사람 폰에만 보인다 (한 사람에게만 보여줄 때 쓴다) */
 function visibleTo(room, pid){
+  if(visModeFor(room, pid) === 'none') return false;   /* 이 사람은 이 방을 아예 못 본다 */
   const only = room && room.only;
   if(!Array.isArray(only) || !only.length) return true;
   return only.indexOf(pid) >= 0;
+}
+
+/* ---------- 사람마다 보이는 대화 범위 ----------
+   room.vis[인물id] = { mode:'all' | 'none' | 'some', msgs:[보여줄 메시지 id...] }
+   - all  : 전부 보기 (기본값, 저장하지 않는다)
+   - none : 이 방이 아예 안 보인다 (대화방 목록에도 안 나온다)
+   - some : 고른 메시지만 보인다 (중간에 들어오거나 나간 연출에 쓴다)
+   같은 방을 A 는 처음부터, B 는 어느 시점부터 보게 만들 수 있다. */
+function visModeFor(room, pid){
+  const v = room && room.vis && pid && room.vis[pid];
+  const m = v && v.mode;
+  return (m === 'none' || m === 'some') ? m : 'all';
+}
+function visPickedIds(room, pid){
+  const v = room && room.vis && pid && room.vis[pid];
+  return (v && Array.isArray(v.msgs)) ? v.msgs : [];
+}
+/* 이 사람 폰에 실제로 보이는 메시지만 추린다 */
+function msgsFor(room, pid){
+  const all = (room && room.messages) || [];
+  const mode = visModeFor(room, pid);
+  if(mode === 'all') return all;
+  if(mode === 'none') return [];
+  const keep = visPickedIds(room, pid);
+  if(!keep.length) return [];
+  return all.filter(m => m && keep.indexOf(m.id) >= 0);
+}
+/* 이 기기에서 고른 “나” 기준 */
+function myMsgs(room){ return msgsFor(room, effMeId()); }
+function setVisMode(room, pid, mode){
+  if(!pid) return;
+  if(!room.vis || typeof room.vis !== 'object') room.vis = {};
+  if(mode === 'all'){
+    delete room.vis[pid];
+    if(!Object.keys(room.vis).length) delete room.vis;
+    return;
+  }
+  const cur = room.vis[pid] || {};
+  room.vis[pid] = { mode: mode, msgs: Array.isArray(cur.msgs) ? cur.msgs : [] };
 }
 /* 손님 화면에 보이는 대화방 = 고른 “나”가 참여한 방 */
 function visibleRooms(L){
@@ -7289,7 +8549,7 @@ function autoUnreadFor(room, pid){
   const p = personById(curList(), pid);
   if(!p) return 0;
   const k = normKey(p.name);
-  const msgs = room.messages || [];
+  const msgs = msgsFor(room, pid);      /* 이 사람에게 보이는 것만 센다 */
   const mine = m => normKey(m.senderName) === k;
   let lastMine = -1;
   for(let i = msgs.length-1; i >= 0; i--){ if(mine(msgs[i])){ lastMine = i; break; } }
@@ -7761,10 +9021,13 @@ function timeToMinutes(s){
 }
 /* 방의 마지막 메시지가 언제인지 (날짜는 바뀌는 날 첫 메시지에만 있으므로 누적해서 찾는다) */
 function lastMsgWhen(room){
-  const msgs = room.messages || [];
+  const all = room.messages || [];
+  const msgs = myMsgs(room);            /* 이 폰에 보이는 마지막 메시지 기준 */
   if(!msgs.length) return null;
+  /* 날짜는 숨긴 메시지까지 훑어야 정확하다 (날짜는 바뀌는 날 첫 메시지에만 들어 있다) */
+  const lastIdx = all.indexOf(msgs[msgs.length-1]);
   let date = '';
-  for(let i = 0; i < msgs.length; i++){ if(msgs[i].date) date = msgs[i].date; }
+  for(let i = 0; i <= lastIdx; i++){ if(all[i].date) date = all[i].date; }
   const last = msgs[msgs.length-1];
   return { date: date, time: last.time || '', minutes: timeToMinutes(last.time) };
 }
@@ -7908,6 +9171,7 @@ const OPEN_SVG = `<span class="open-badge"><svg viewBox="0 0 24 24" fill="#fff">
 function previewText(msg){
   if(!msg) return '';
   if(msg.text) return msg.text;
+  if(hasFile(msg)) return '파일: ' + String(msg.file.name).trim();
   if(msg.image) return '사진';
   return '';
 }
@@ -7939,7 +9203,8 @@ function renderList(){
   }
   let totalUnread = 0;
   mine.forEach(room=>{
-    const last = room.messages[room.messages.length-1];
+    const mine2 = myMsgs(room);                 /* 이 폰에 보이는 것만 */
+    const last = mine2[mine2.length-1];
     const preview = previewText(last);
     const time = listTimeLabel(room);
     const unread = roomUnread(room);
@@ -8065,19 +9330,46 @@ function inviteEl(room){
   return el;
 }
 
+/* ---------- 파일 보낸 것처럼 보이는 카드 ----------
+   메시지에 file = {name, date, expire, size} 가 들어 있으면 말풍선 대신 파일 카드로 보여준다.
+   네 칸 모두 그냥 글자라서 원하는 대로 적으면 된다. 비워 둔 줄은 나오지 않는다.
+   제목(name)이 비어 있으면 카드 자체가 안 나온다. */
+const FILE_DL_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7.5 11l4.5 4.5 4.5-4.5"/><path d="M5 19h14"/></svg>';
+function fileCardHtml(msg){
+  const f = msg && msg.file;
+  if(!f || !String(f.name||'').trim()) return '';
+  const row = (k, v)=> String(v||'').trim()
+    ? `<div class="mf-row"><span class="mf-k">${esc(k)}</span><span class="mf-v">${esc(String(v).trim())}</span></div>` : '';
+  return `<div class="msg-file">
+      <div class="mf-main">
+        <div class="mf-name">${esc(String(f.name).trim())}</div>
+        ${row('날짜', f.date)}${row('유효기간', f.expire)}${row('용량', f.size)}
+      </div>
+      <div class="mf-dl">${FILE_DL_SVG}</div>
+    </div>`;
+}
+function hasFile(msg){ return !!(msg && msg.file && String(msg.file.name||'').trim()); }
+
 function renderMessages(room){
   const box = $('#messages'); box.innerHTML = '';
-  const msgs = room.messages;
+  const all = room.messages || [];
   const showInvite = inviteShown(room) && !!inviteTextOf(room);
+
+  /* 각 메시지가 속한 날짜를 먼저 계산 (날짜는 바뀌는 날 첫 메시지에만 입력).
+     숨긴 메시지까지 포함해 계산한 뒤에 추려야, 앞 메시지를 숨겨도 날짜 구분선이 남는다 */
+  const effAll = [];
+  let cd = null;
+  all.forEach(m=>{ if(m.date && m.date !== cd) cd = m.date; effAll.push(cd); });
+
+  /* 이 폰의 “나”에게 보이는 것만 남긴다 */
+  const keep = myMsgs(room);
+  const msgs = [], eff = [];
+  all.forEach((m, i)=>{ if(keep.indexOf(m) >= 0){ msgs.push(m); eff.push(effAll[i]); } });
+
   if(!msgs.length){
     if(showInvite) box.appendChild(inviteEl(room));
     return;
   }
-
-  /* 각 메시지가 속한 날짜를 먼저 계산 (날짜는 바뀌는 날 첫 메시지에만 입력) */
-  const eff = [];
-  let cd = null;
-  msgs.forEach(m=>{ if(m.date && m.date !== cd) cd = m.date; eff.push(cd); });
 
   /* 발신자 + 시간이 같으면 한 묶음. 묶음이 바뀌면 프로필/이름을 다시 보여준다 */
   const gkey = i => (msgs[i].senderName||'') + '|' + (msgs[i].time||'');
@@ -8118,6 +9410,7 @@ function renderMessages(room){
       </div>`;
     const photoHtml = msg.image
       ? `<div class="msg-photo" data-photo="${esc(msg.id)}"><img src="${msg.image}" alt="사진"></div>` : '';
+    const fileHtml = fileCardHtml(msg);
     const textHtml = msg.text ? `<div class="bubble">${esc(msg.text)}</div>` : '';
 
     row.innerHTML = `
@@ -8125,7 +9418,7 @@ function renderMessages(room){
       <div class="msg-body">
         ${(!mine && isGroupHead)?`<div class="msg-sender">${esc(dispName(p.name))}</div>`:''}
         <div class="msg-line">
-          <div class="msg-stack">${photoHtml}${textHtml}</div>
+          <div class="msg-stack">${fileHtml}${photoHtml}${textHtml}</div>
           ${infoHtml}
         </div>
       </div>`;
@@ -8637,7 +9930,9 @@ function bindTreeSection(body){
       const L = listOfCat(c1, c2);
       const list = peopleOf(L);                 /* 먼저 명단을 확정한 뒤에 넣는다 */
       const nm = uniqueName(list.map(p=>p.name), '새 인물');
-      list.push({ id:personId(nm), name:nm, avatar:'', silo:list.length % 2 });
+      const np = { id:newPersonId(L, nm), name:nm, avatar:'', silo:list.length % 2 };
+      list.push(np);
+      editingNode = 'P:' + np.id;      /* 만들자마자 이름을 바로 고칠 수 있게 연다 */
     }
     save(); renderAdminHome();
   };
@@ -8980,7 +10275,7 @@ function roomListHtml(){
       <div class="admin-list-item ${room.id===adminRoomId?'picked':''}">
         <div class="top">
           <div>
-            <div class="rname">${esc(roomLabel(room))} ${room.isGroup?'<span class="rsub" style="display:inline">· 단톡방</span>':''}${(room.only&&room.only.length)?'<span class="rsub" style="display:inline">· 👁일부만</span>':''}</div>
+            <div class="rname">${esc(roomLabel(room))} ${room.isGroup?'<span class="rsub" style="display:inline">· 단톡방</span>':''}${(room.only&&room.only.length)?'<span class="rsub" style="display:inline">· 👁일부만</span>':''}${(room.vis&&Object.keys(room.vis).length)?'<span class="rsub" style="display:inline">· 👤범위</span>':''}</div>
             <div class="rsub">${esc((room.participants||[]).map(p=>p.name).join(', '))}</div>
             <div class="rsub">메시지 ${room.messages.length}개 · 목록 표시 시간 <b>${esc(listTimeLabel(room)||'-')}</b></div>
           </div>
@@ -9276,6 +10571,51 @@ function roomEditorHtml(room){
       </div>
       <div class="hint" style="margin-top:6px">한 사람의 폰에만 보여주고 싶을 때 위 체크를 끄고 그 사람만 고르세요.
         (고르지 않으면 참여자 모두에게 보입니다)</div>
+
+      <h3 style="margin-top:14px">사람마다 보이는 대화 범위</h3>
+      <div class="hint" style="margin:0 0 8px">중간에 들어오거나 나간 연출에 씁니다.
+        예를 들어 24~25년 대화에서 <b>A는 전부</b>, <b>B는 25년치만</b> 보이게 할 수 있습니다.</div>
+      ${room.participants.map(p=>{
+        const per = personByName(L, p.name);
+        if(!per) return '';
+        const mode = visModeFor(room, per.id);
+        const picked = visPickedIds(room, per.id);
+        const n = (room.messages||[]).filter(m=> picked.indexOf(m.id) >= 0).length;
+        return `<div class="vis-person" data-vp="${per.id}">
+          <div class="vis-head">
+            <b>${esc(p.name)}</b>
+            <label><input type="radio" name="vis_${per.id}" data-vm="all"  ${mode==='all' ?'checked':''}> 전부 보기</label>
+            <label><input type="radio" name="vis_${per.id}" data-vm="none" ${mode==='none'?'checked':''}> 전체 보지 않기</label>
+            <label><input type="radio" name="vis_${per.id}" data-vm="some" ${mode==='some'?'checked':''}> 일부만 보기</label>
+            ${mode==='some' ? `<span class="rsub">고른 대화 ${n}개</span>` : ''}
+          </div>
+          ${mode==='some' ? `
+          <div class="vis-pick">
+            <div class="vis-tools">
+              <button class="btn btn-ghost btn-sm" data-vall="1">전체 선택</button>
+              <button class="btn btn-ghost btn-sm" data-vnone="1">전체 해제</button>
+              <button class="btn btn-ghost btn-sm" data-vfrom="1">여기부터 끝까지</button>
+              <span class="rsub">왼쪽 칸을 켜고 “여기부터 끝까지”를 누르면 그 아래가 모두 켜집니다</span>
+            </div>
+            <div class="vis-list">
+              ${(room.messages||[]).map((m, mi)=>{
+                const on = picked.indexOf(m.id) >= 0;
+                const line = (m.text || (hasFile(m) ? '파일: ' + m.file.name : (m.image ? '사진' : '(빈 메시지)')));
+                return `<label class="vis-row${on?' on':''}">
+                  <input type="checkbox" data-vmsg="${esc(m.id)}" ${on?'checked':''}>
+                  <span class="vis-when">${esc(m.date ? formatKoreanDate(m.date) : '')}${m.date?' · ':''}${esc(m.time||'')}</span>
+                  <span class="vis-who">${esc(m.senderName||'')}</span>
+                  <span class="vis-txt">${esc(String(line).replace(/\n/g,' ').slice(0,60))}</span>
+                </label>`;
+              }).join('')}
+            </div>
+            <div class="row-actions" style="margin-top:8px">
+              <button class="btn btn-primary btn-sm" data-vsave="1">저장</button>
+              <span class="rsub" id="visMsg_${per.id}"></span>
+            </div>
+          </div>` : ''}
+        </div>`;
+      }).join('')}
     </div>
 
     ${room.isGroup ? `<div class="admin-section">
@@ -9390,6 +10730,46 @@ function bindRoomEditor(room, rid){
     save();
   });
 
+  /* 사람마다 보이는 대화 범위 (전부 / 전체 보지 않기 / 일부만) */
+  document.querySelectorAll('.vis-person').forEach(boxEl=>{
+    const pid = boxEl.dataset.vp;
+    if(!pid) return;
+
+    boxEl.querySelectorAll('[data-vm]').forEach(r=> r.onchange = ()=>{
+      if(!r.checked) return;
+      const mode = r.dataset.vm;
+      /* “일부만”을 처음 켜면 아직 아무것도 안 고른 상태로 시작한다 */
+      setVisMode(room, pid, mode);
+      save(); editRoom(rid);
+    });
+
+    const rows = ()=> Array.prototype.slice.call(boxEl.querySelectorAll('[data-vmsg]'));
+    const paint = cb => { const row = cb.closest('.vis-row'); if(row) row.classList.toggle('on', cb.checked); };
+    rows().forEach(cb=> cb.onchange = ()=> paint(cb));
+
+    const bAll = boxEl.querySelector('[data-vall]');
+    if(bAll) bAll.onclick = ()=> rows().forEach(cb=>{ cb.checked = true; paint(cb); });
+    const bNone = boxEl.querySelector('[data-vnone]');
+    if(bNone) bNone.onclick = ()=> rows().forEach(cb=>{ cb.checked = false; paint(cb); });
+    const bFrom = boxEl.querySelector('[data-vfrom]');
+    if(bFrom) bFrom.onclick = ()=>{
+      const list = rows();
+      const first = list.findIndex(cb=> cb.checked);
+      if(first < 0){ toast('먼저 시작할 대화 하나를 체크하세요'); return; }
+      list.forEach((cb, i)=>{ cb.checked = (i >= first); paint(cb); });
+    };
+
+    const bSave = boxEl.querySelector('[data-vsave]');
+    if(bSave) bSave.onclick = ()=>{
+      const picked = rows().filter(cb=> cb.checked).map(cb=> cb.dataset.vmsg);
+      if(!room.vis || typeof room.vis !== 'object') room.vis = {};
+      room.vis[pid] = { mode:'some', msgs: picked };
+      save(); editRoom(rid);
+      toast(picked.length ? ('고른 대화 ' + picked.length + '개만 보이게 저장했습니다')
+                          : '아무것도 고르지 않아 이 사람에게는 빈 대화방으로 보입니다');
+    };
+  });
+
   const invShow = $('#invShow');
   if(invShow) invShow.onchange = ()=>{ room.inviteShow = invShow.checked; save(); };
   const invText = $('#invText');
@@ -9409,7 +10789,7 @@ function bindRoomEditor(room, rid){
     const v = $('#newPart').value.trim(); if(!v) return;
     const L = curList();
     let p = personByName(L, v);
-    if(!p){ const list = peopleOf(L); p = {id:personId(v), name:v, avatar:'', silo:list.length%2}; list.push(p); }
+    if(!p){ const list = peopleOf(L); p = {id:newPersonId(L, v), name:v, avatar:'', silo:list.length%2}; list.push(p); }
     if(inRoom(room, p.name)){ toast('이미 참여자에 있습니다'); return; }
     room.participants.push({id:id(), name:p.name});
     save(); editRoom(rid);
@@ -9570,6 +10950,7 @@ function renderMsgEditors(room, rid){
     const mine = !!msg.senderName && normKey(msg.senderName) === meName;
     ed.className = 'msg-editor' + (mine ? ' mine' : '');
     const unread = Number(msg.unread)||0;
+    const mf = (msg.file && typeof msg.file === 'object') ? msg.file : {};
     ed.innerHTML = `
       <div class="who">${esc(msg.senderName || '(이름 없음)')}</div>
       <div class="er1">
@@ -9591,7 +10972,18 @@ function renderMsgEditors(room, rid){
         <button class="btn btn-ghost btn-sm" data-a="photo">${msg.image?'사진 변경':'＋ 사진'}</button>
         ${msg.image?'<button class="btn btn-ghost btn-sm" data-a="photoDel">사진 제거</button>':''}
         <input type="file" accept="image/*" style="display:none" data-a="file">
+        ${msg.file?'':'<button class="btn btn-ghost btn-sm" data-a="fileAdd">＋ 첨부파일</button>'}
       </div>
+      ${msg.file ? `
+      <div class="er4" style="flex-wrap:wrap; gap:6px; margin-top:4px">
+        <input data-f="fname" style="flex:1 1 100%; width:auto" placeholder="첨부파일 제목 (예: [촬영 구성안] 폐공장 체험(최종)_0714)" value="${esc(mf.name||'')}">
+        <input data-f="fdate" style="flex:1 1 30%; width:auto; min-width:110px" placeholder="날짜" value="${esc(mf.date||'')}">
+        <input data-f="fexp" style="flex:1 1 30%; width:auto; min-width:110px" placeholder="유효기간" value="${esc(mf.expire||'')}">
+        <input data-f="fsize" style="flex:1 1 25%; width:auto; min-width:90px" placeholder="용량" value="${esc(mf.size||'')}">
+        <button class="btn btn-ghost btn-sm" data-a="fileDel">첨부파일 제거</button>
+      </div>
+      <div class="hint" style="margin:2px 0 0">제목을 적으면 채팅 화면에 파일 카드로 보입니다.
+        날짜·유효기간·용량은 비워 두면 그 줄이 안 나옵니다. (예: 유효기간 <b>~2025. 7. 18.</b> · 용량 <b>804 KB</b>)</div>` : ''}
       <div class="er3">
         <label><input type="checkbox" data-f="unreadOn" ${unread>0?'checked':''}> 안읽음 숫자</label>
         <input data-f="unread" type="number" min="0" style="width:64px;padding:5px 8px" value="${unread}" ${unread>0?'':'disabled'}>
@@ -9636,6 +11028,30 @@ function renderMsgEditors(room, rid){
     };
     const pdel = ed.querySelector('[data-a="photoDel"]');
     if(pdel) pdel.onclick = ()=>{ msg.image=''; save(); renderMsgEditors(room, rid); };
+
+    /* 첨부파일 카드 — “＋ 첨부파일”을 누르면 적는 칸이 열린다 (사진과 같은 방식) */
+    const fadd = ed.querySelector('[data-a="fileAdd"]');
+    if(fadd) fadd.onclick = ()=>{
+      msg.file = { name:'', date:'', expire:'', size:'' };
+      save(); renderMsgEditors(room, rid);
+      /* 열자마자 제목부터 적을 수 있게 */
+      const box2 = document.querySelectorAll('.msg-editor')[i];
+      const nm = box2 && box2.querySelector('[data-f="fname"]');
+      if(nm) nm.focus();
+    };
+    /* 칸을 비워도 적는 칸은 그대로 둔다 — 지울 때는 “첨부파일 제거”를 누른다 */
+    const setFile = (k, v)=>{
+      if(!msg.file || typeof msg.file !== 'object') msg.file = {};
+      msg.file[k] = v;
+      save();
+    };
+    const fileKeys = { fname:'name', fdate:'date', fexp:'expire', fsize:'size' };
+    Object.keys(fileKeys).forEach(sel=>{
+      const el = ed.querySelector('[data-f="' + sel + '"]');
+      if(el) el.oninput = e=> setFile(fileKeys[sel], e.target.value);
+    });
+    const fdel = ed.querySelector('[data-a="fileDel"]');
+    if(fdel) fdel.onclick = ()=>{ delete msg.file; save(); renderMsgEditors(room, rid); };
 
     const uOn = ed.querySelector('[data-f="unreadOn"]');
     const uNum = ed.querySelector('[data-f="unread"]');
@@ -9941,6 +11357,8 @@ setTimeout(function once(){
   checkForUpdate(false);
 }, 1500);
 </script>
+
+
 
 
 
