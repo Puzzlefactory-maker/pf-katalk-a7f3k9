@@ -1,22 +1,21 @@
-/* 단서 메신저 서비스워커
-   - 등록 주소가 ./sw.js?v=DATA_VERSION 이므로 파일이 새로 배포되면 캐시 이름이 바뀐다.
-   - 새 캐시가 활성화되는 순간 이전 버전 캐시는 전부 삭제된다.
-   - html/manifest 는 항상 네트워크 먼저(=최신 파일 우선), 실패하면 캐시로 열린다. */
+/* 단서 메신저 서비스워커 — 구형 폰에서도 읽히도록 ES5 문법만 쓴다.
 
-const VER = (function(){
-  try { return new URL(self.location.href).searchParams.get('v') || 'dev'; }
-  catch(e){ return 'dev'; }
+   예전 파일은 async/await 와 화살표 함수를 써서, 크롬 55 미만(갤럭시 노트4·S6 에 들어
+   있는 브라우저)에서는 이 파일 자체가 읽히지 않았다. 그러면 서비스워커가 설치되지 않아
+   캐시가 비고, 와이파이가 없을 때 앱이 열리지 않는다.
+
+   캐시는 이 앱 것(앞머리가 같은 것)만 지운다. 같은 주소에 다른 단서 앱이 함께 올라가
+   있어도 서로의 캐시를 지우지 않는다. */
+
+var PREFIX = 'crimescene-kakao-';
+var VER = (function () {
+  try {
+    var m = String(self.location.search || '').match(/[?&]v=([^&]*)/);
+    return m ? decodeURIComponent(m[1]) : 'dev';
+  } catch (e) { return 'dev'; }
 })();
-const PREFIX = 'crimescene-kakao-';
-const CACHE = PREFIX + VER;
-/* 같은 주소(github.io 등)에 다른 단서 앱이 함께 올라가 있을 수 있으므로
-   이 앱의 캐시만 골라낸다. 예전 이름(crimescene-<버전>)도 이 앱 것으로 본다. */
-function isMine(k){
-  if (k.indexOf(PREFIX) === 0) return true;
-  if (k.indexOf('crimescene-') !== 0) return false;
-  return k.indexOf('crimescene-insta-') !== 0;
-}
-const ASSETS = [
+var CACHE = PREFIX + VER;
+var ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
@@ -24,72 +23,88 @@ const ASSETS = [
   './icons/icon-512.png'
 ];
 
-self.addEventListener('install', event => {
+function isMine(k) { return k.indexOf(PREFIX) === 0; }
+
+self.addEventListener('install', function (event) {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE).then(cache =>
-      Promise.all(ASSETS.map(u => cache.add(u).catch(() => {})))
-    )
+    caches.open(CACHE).then(function (cache) {
+      var jobs = [];
+      for (var i = 0; i < ASSETS.length; i++) {
+        jobs.push(cache.add(ASSETS[i])['catch'](function () {}));
+      }
+      return Promise.all(jobs);
+    })['catch'](function () {})
   );
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter(k => isMine(k) && k !== CACHE).map(k => caches.delete(k)));
-    await self.clients.claim();
-  })());
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
+    caches.keys().then(function (keys) {
+      var jobs = [];
+      for (var i = 0; i < keys.length; i++) {
+        if (isMine(keys[i]) && keys[i] !== CACHE) jobs.push(caches['delete'](keys[i]));
+      }
+      return Promise.all(jobs);
+    })['catch'](function () {}).then(function () {
+      return self.clients.claim();
+    })
+  );
 });
 
-self.addEventListener('fetch', event => {
-  const req = event.request;
+/* 화면(문서) 요청인지 */
+function isDocReq(req, path) {
+  if (req.mode === 'navigate') return true;
+  if (path.charAt(path.length - 1) === '/') return true;
+  return /\.(html|webmanifest)$/.test(path);
+}
+
+self.addEventListener('fetch', function (event) {
+  var req = event.request;
   if (req.method !== 'GET') return;
 
-  let url;
-  try { url = new URL(req.url); } catch (e) { return; }
-  if (url.origin !== self.location.origin) return;
+  var href = req.url;
+  if (href.indexOf(self.location.origin) !== 0) return;   /* 다른 주소는 손대지 않는다 */
 
-  /* 새 파일 확인용 요청(_uc)과 파일 만들기용 요청(_ex)은 서비스워커가 손대지 않는다.
-     캐시를 거치지 않고 서버의 실제 파일을 그대로 읽어야 하기 때문이다. */
-  if (url.searchParams.has('_uc') || url.searchParams.has('_ex')) return;
+  /* 새 파일 확인(_uc)·파일 만들기(_ex) 요청은 서버 파일을 그대로 읽어야 하므로 지나간다 */
+  if (href.indexOf('_uc=') >= 0 || href.indexOf('_ex=') >= 0) return;
 
-  const isDoc = req.mode === 'navigate'
-    || url.pathname.endsWith('/')
-    || url.pathname.endsWith('.html')
-    || url.pathname.endsWith('.webmanifest');
+  var path = href.split('#')[0].split('?')[0];
 
-  if (isDoc) {
-    event.respondWith((async () => {
-      try {
-        /* 이동(navigate) 요청은 Request 를 그대로 재사용하면 브라우저마다 제약이 있어,
-           주소에 시간값을 붙여 새로 요청한다. 이러면 브라우저 캐시도 확실히 건너뛴다. */
-        const bust = new URL(url.href);
-        bust.searchParams.set('_sw', Date.now().toString(36));
-        const fresh = await fetch(bust.href, { cache: 'no-store', credentials: 'same-origin' });
-        if (!fresh || !fresh.ok) throw new Error('bad response');
-        try {
-          const cache = await caches.open(CACHE);
-          await cache.put(new Request(url.href), fresh.clone());
-        } catch (e) { }
-        return fresh;
-      } catch (e) {
-        const hit = await caches.match(url.href, { ignoreSearch: true });
-        return hit || (await caches.match('./index.html')) || Response.error();
-      }
-    })());
+  if (isDocReq(req, path)) {
+    /* 화면은 서버 먼저, 안 되면 캐시 — 오프라인이면 바로 캐시로 열린다 */
+    event.respondWith(
+      fetch(path + '?_sw=' + Date.now().toString(36), { cache: 'no-store', credentials: 'same-origin' })
+        .then(function (fresh) {
+          if (!fresh || !fresh.ok) throw new Error('bad response');
+          var copy = fresh.clone();
+          caches.open(CACHE).then(function (cache) {
+            cache.put(new Request(path), copy);
+          })['catch'](function () {});
+          return fresh;
+        })['catch'](function () {
+          return caches.match(path, { ignoreSearch: true }).then(function (hit) {
+            if (hit) return hit;
+            return caches.match('./index.html').then(function (h2) {
+              return h2 || Response.error();
+            });
+          });
+        })
+    );
     return;
   }
 
-  event.respondWith((async () => {
-    const hit = await caches.match(req, { ignoreSearch: true });
-    if (hit) return hit;
-    try {
-      const fresh = await fetch(req);
-      const cache = await caches.open(CACHE);
-      cache.put(req, fresh.clone());
-      return fresh;
-    } catch (e) {
-      return Response.error();
-    }
-  })());
+  /* 그림·아이콘 등은 캐시 먼저 */
+  event.respondWith(
+    caches.match(req, { ignoreSearch: true }).then(function (hit) {
+      if (hit) return hit;
+      return fetch(req).then(function (fresh) {
+        var copy = fresh.clone();
+        caches.open(CACHE).then(function (cache) {
+          cache.put(req, copy);
+        })['catch'](function () {});
+        return fresh;
+      })['catch'](function () { return Response.error(); });
+    })
+  );
 });

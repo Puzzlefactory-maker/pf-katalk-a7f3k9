@@ -177,6 +177,45 @@
     display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .msg-file .mf-dl svg { width:17px; height:17px; display:block; }
 
+  /* ---------- 글자·프로필 크기 (폰마다 따로) ----------
+     --fs = 글자 배율, --fc = 프로필 사진 배율. 둘 다 1 이 지금 크기.
+     손님에게 보이는 화면에만 걸고, 관리자 편집 화면은 건드리지 않는다. */
+  #phone { --fs:1; --fc:1; }
+
+  #listScreen .header .title { font-size:calc(24px * var(--fs)); }
+  #roomScreen .header .title { font-size:calc(18px * var(--fs)); }
+  #listScreen .header .actions button { font-size:calc(20px * var(--fs)); }
+  #roomScreen .header .back { font-size:calc(24px * var(--fs)); }
+  #listScreen .chip { font-size:calc(15.5px * var(--fs)); }
+  #listScreen .adbox .ad-top  { font-size:calc(11.5px * var(--fs)); }
+  #listScreen .adbox .ad-head { font-size:calc(16.5px * var(--fs)); }
+  #listScreen .adbox .ad-foot { font-size:calc(11px * var(--fs)); }
+  #listScreen .adbox .ad-tag  { font-size:calc(8.5px * var(--fs)); }
+  #listScreen .chat-name    { font-size:calc(16.5px * var(--fs)); }
+  #listScreen .chat-count   { font-size:calc(15px * var(--fs)); }
+  #listScreen .chat-preview { font-size:calc(14.5px * var(--fs)); }
+  #listScreen .chat-time    { font-size:calc(13px * var(--fs)); }
+  #listScreen .badge        { font-size:calc(11px * var(--fs)); }
+  #listScreen .tab-badge    { font-size:calc(10px * var(--fs)); }
+  #listScreen .empty        { font-size:calc(14px * var(--fs)); }
+  #roomScreen .msg-sender   { font-size:calc(12.5px * var(--fs)); }
+  #roomScreen .bubble       { font-size:calc(14.5px * var(--fs)); }
+  #roomScreen .msg-info     { font-size:calc(10.5px * var(--fs)); }
+  #roomScreen .date-divider span { font-size:calc(12px * var(--fs)); }
+  #roomScreen .sys-notice   { font-size:calc(11.5px * var(--fs)); }
+  #roomScreen .float-date   { font-size:calc(12px * var(--fs)); }
+  #roomScreen .msg-file .mf-name { font-size:calc(14.5px * var(--fs)); }
+  #roomScreen .msg-file .mf-row  { font-size:calc(12.5px * var(--fs)); }
+  #roomScreen .inputbar .plus       { font-size:calc(24px * var(--fs)); }
+  #roomScreen .inputbar .fake-input { font-size:calc(14px * var(--fs)); }
+  #roomScreen .inputbar .send       { font-size:calc(20px * var(--fs)); }
+
+  /* 프로필 사진 (대화방 목록 · 말풍선 옆) */
+  #listScreen .avatar { width:calc(48px * var(--fc)); height:calc(48px * var(--fc));
+    border-radius:calc(19px * var(--fc)); font-size:calc(18px * var(--fc)); }
+  #roomScreen .msg-avatar { width:calc(40px * var(--fc)); height:calc(40px * var(--fc));
+    border-radius:calc(14px * var(--fc)); font-size:calc(15px * var(--fc)); }
+
   /* 관리자 — 사람마다 보이는 대화 범위 */
   .vis-person { border:1px solid #e3e7ec; border-radius:10px; padding:8px 10px; margin-bottom:8px; }
   .vis-head { display:flex; align-items:center; flex-wrap:wrap; gap:10px; font-size:13px; }
@@ -924,9 +963,54 @@
 .adbox .ad-img .ph>*+*{margin-top:3px}
 .chat-item>*+*{margin-left:14px}
 .chat-name-row>*+*{margin-left:5px}
+.chat-right>*+*{margin-top:6px}</style><style id="oldBrowserGap">.header .actions>*+*{margin-left:4px}
+.chat-right>*+*{margin-top:5px}
+.msg-stack>*+*{margin-top:4px}
+.msg-file>*+*{margin-left:10px}
+.msg-file .mf-row>*+*{margin-left:8px}
+.vis-head>*{margin-right:10px}
+.vis-head>*{margin-bottom:10px}
+.vis-head label>*+*{margin-left:4px}
+.vis-tools>*{margin-right:6px}
+.vis-tools>*{margin-bottom:6px}
+.vis-row>*+*{margin-left:7px}
+.inputbar>*+*{margin-left:8px}
+.bp-row>*+*{margin-left:10px}
+.admin-body>*+*{margin-left:14px}
+.add-row>*+*{margin-left:8px}
+.add-row .left>*+*{margin-left:6px}
+.field.inline>*+*{margin-left:8px}
+.row-actions>*{margin-right:6px}
+.row-actions>*{margin-bottom:6px}
+.crumb>*{margin-right:8px}
+.crumb>*{margin-bottom:8px}
+.ppl-row>*+*{margin-left:10px}
+.ppl-head>*+*{margin-left:8px}
+.ppl-btns>*{margin-right:6px}
+.ppl-btns>*{margin-bottom:6px}
+.ppl-alias>*+*{margin-left:6px}
+.admin-list-item .top>*+*{margin-left:8px}
+.part-row>*+*{margin-left:11px}
+.part-name>*+*{margin-left:6px}
+.part-actions>*{margin-right:5px}
+.part-actions>*{margin-bottom:5px}
+.msg-editor .er1>*+*{margin-left:8px}
+.msg-editor .er2>*+*{margin-left:8px}
+.msg-editor .er3>*+*{margin-left:12px}
+.msg-editor .er3 label>*+*{margin-left:5px}
+.msg-editor .er4>*+*{margin-left:8px}
+.confirm-actions>*+*{margin-left:8px}
+#listScreen .header .actions>*+*{margin-left:0px}
+.chips>*+*{margin-left:8px}
+.adbox>*+*{margin-left:12px}
+.adbox .ad-top>*+*{margin-left:5px}
+.adbox .ad-foot>*+*{margin-left:5px}
+.adbox .ad-img .ph>*+*{margin-top:3px}
+.chat-item>*+*{margin-left:14px}
+.chat-name-row>*+*{margin-left:5px}
 .chat-right>*+*{margin-top:6px}</style></head>
 <body>
-<div id="phone" style="--safe-b: 0px;">
+<div id="phone" style="--safe-b: 0px; --fs: 1.000; --fc: 1.000;">
   <div class="mode-pill" id="modePill">관리자 모드</div>
 
   <!-- 채팅 목록 화면 -->
@@ -955,7 +1039,7 @@
       <div class="tab active" title="채팅">
         <div class="tab-ico">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.7 1.7 5.1 4.3 6.5-.2.9-.7 2.4-1 3.1-.1.4.3.7.6.5 1.4-.6 3.2-1.5 4.1-2.1.6.1 1.3.1 2 .1 5.5 0 10-3.6 10-8s-4.5-8-10-8z"></path></svg>
-          <span class="tab-badge hidden" id="chatTabBadge">2</span>
+          <span class="tab-badge" id="chatTabBadge">1</span>
         </div>
       </div>
       <div class="tab" title="오픈채팅">
@@ -977,10 +1061,10 @@
   <div class="screen" id="roomScreen">
     <div class="header">
       <button class="back" id="btnBack">‹</button>
-      <div class="title" id="roomTitle">백도령</div>
+      <div class="title" id="roomTitle">김교수</div>
     </div>
     <div class="messages" id="messages"></div>
-    <div class="float-date" id="floatDate"><span>2025년 2월 20일 목요일</span></div>
+    <div class="float-date" id="floatDate"><span>2020년 1월 25일 토요일</span></div>
     <div class="inputbar">
       <span class="plus">＋</span>
       <div class="fake-input">메시지 입력</div>
@@ -1044,7 +1128,7 @@
    ============================================================ */
 
 /*__CS_DATA_START__ 아래 두 줄이 이 파일에 들어있는 대화 내용입니다. */
-const DATA_VERSION = "2026-10-06-170859";
+const DATA_VERSION = "2026-10-07-115440";
 const EMBEDDED_DATA = {
  "appName": "카카오톡",
  "tree": [
@@ -5325,7 +5409,11 @@ const EMBEDDED_DATA = {
      "id": "xkbw8qrc",
      "name": "",
      "isGroup": false,
-     "per": {},
+     "per": {
+      "p16gxs10": {
+       "unread": 0
+      }
+     },
      "participants": [
       {
        "id": "x8gxyj4y",
@@ -5437,6 +5525,51 @@ const EMBEDDED_DATA = {
        "text": "알겠습니다. 믿겠습니다",
        "image": "",
        "time": "오후 9:31",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xlvsq25w",
+       "senderName": "장실장",
+       "text": "교수님 다들 기다리다가 지쳐갑니다.\n금괴를 모두 빼돌렸으니 이제 일정부분이라도 분배를 해야하지 않겠습니까?",
+       "image": "",
+       "time": "오후 6:22",
+       "date": "2019-11-15",
+       "unread": 0
+      },
+      {
+       "id": "xbo7c3jo",
+       "senderName": "김교수",
+       "text": "완벽한 범죄를 위해서라면 공소시효까지 기다려야합니다.\n그렇지 않으면 금괴를 처분할 때 경찰의 추적을 받을 수 있습니다.",
+       "image": "",
+       "time": "오후 6:23",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "x5mie42w",
+       "senderName": "장실장",
+       "text": "암거래 시장을 이용하면 되지 않습니까. 이러다 누군가가 다른 마음을 품으면 어쩌려고 합니까?",
+       "image": "",
+       "time": "오후 6:23",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xgidalyw",
+       "senderName": "김교수",
+       "text": "금괴를 제가 관리하는 이상 누구도 그렇게 행동하지는 않을 겁니다. 겨우 7년입니다. 7년만 지나면 평생 돈 걱정 없이 살 수 있습니다.",
+       "image": "",
+       "time": "오후 6:24",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xsfvmkvy",
+       "senderName": "장실장",
+       "text": "여전히 말이 통하지 않는군요. 알겠습니다.",
+       "image": "",
+       "time": "오후 6:24",
        "date": "",
        "unread": 0
       },
@@ -5563,18 +5696,14 @@ const EMBEDDED_DATA = {
      "id": "x12t00h9",
      "name": "",
      "isGroup": false,
-     "per": {
-      "p18g228o": {
-       "unread": 0
-      }
-     },
+     "per": {},
      "participants": [
       {
-       "id": "xa0fqzlh",
-       "name": "김교수"
+       "id": "xhintuyz",
+       "name": "명사수"
       },
       {
-       "id": "xyopirmm",
+       "id": "xeofg4s5",
        "name": "머니머니 김팀장"
       }
      ],
@@ -5608,7 +5737,7 @@ const EMBEDDED_DATA = {
       },
       {
        "id": "xpk5da5x",
-       "senderName": "김교수",
+       "senderName": "명사수",
        "text": "추가대출을 좀 받으려고 하는데 얼마까지 가능한가요?",
        "image": "",
        "time": "오전 10:56",
@@ -5626,7 +5755,7 @@ const EMBEDDED_DATA = {
       },
       {
        "id": "xzjojed7",
-       "senderName": "김교수",
+       "senderName": "명사수",
        "text": "네 그럼 바로 진행할게요",
        "image": "",
        "time": "오전 10:57",
@@ -5653,7 +5782,7 @@ const EMBEDDED_DATA = {
       },
       {
        "id": "xomu1onw",
-       "senderName": "김교수",
+       "senderName": "명사수",
        "text": "저거 작성만하면 바로 대출 되는거죠?",
        "image": "",
        "time": "오전 10:58",
@@ -5662,7 +5791,7 @@ const EMBEDDED_DATA = {
       },
       {
        "id": "xu5qi2ut",
-       "senderName": "김교수",
+       "senderName": "명사수",
        "text": "일단 고민 좀 해볼게요..",
        "image": "",
        "time": "오전 10:58",
@@ -5903,13 +6032,13 @@ const EMBEDDED_DATA = {
       },
       {
        "id": "x8x1mdxa",
-       "name": "엄마"
+       "name": "대화상대1"
       }
      ],
      "messages": [
       {
        "id": "xjss3x4a",
-       "senderName": "엄마",
+       "senderName": "대화상대1",
        "text": "다영아 요즘 별 일 없어? 이제 번듯한 직장 찾아야지. 엄마는 늘 걱정된다.",
        "image": "",
        "time": "오후 3:10",
@@ -5936,7 +6065,7 @@ const EMBEDDED_DATA = {
       },
       {
        "id": "xi12d2k8",
-       "senderName": "엄마",
+       "senderName": "대화상대1",
        "text": "온 가족이 늘 걱정하고 있는 거 모르니? 예인이는 너 때문에 그런 일을 겪고도 계속 너만 걱정하고 있어.",
        "image": "",
        "time": "오후 3:10",
@@ -5967,7 +6096,11 @@ const EMBEDDED_DATA = {
      "id": "x8rcf9bz",
      "name": "",
      "isGroup": false,
-     "per": {},
+     "per": {
+      "p1vdmjr0_2": {
+       "unread": 0
+      }
+     },
      "participants": [
       {
        "id": "x2nrfo23",
@@ -6586,10 +6719,16 @@ const EMBEDDED_DATA = {
        "id": "xhg3iu52",
        "senderName": "머니머니 김팀장",
        "text": "",
-       "image": "data:image/jpeg;base64,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",
+       "image": "",
        "time": "오후 4:17",
        "date": "",
-       "unread": 0
+       "unread": 0,
+       "file": {
+        "name": "유도환_신체포기각서.jpg",
+        "date": "",
+        "expire": "2020.02.25",
+        "size": "22.06KB"
+       }
       },
       {
        "id": "xsik5tiu",
@@ -6624,6 +6763,312 @@ const EMBEDDED_DATA = {
        "text": "알겠습니다! 감사합니다!",
        "image": "",
        "time": "오후 4:17",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "x8fm3wdt",
+     "name": "",
+     "isGroup": false,
+     "per": {},
+     "participants": [
+      {
+       "id": "xfkvopnr",
+       "name": "김교수"
+      },
+      {
+       "id": "xmyhlim1",
+       "name": "장의사"
+      }
+     ],
+     "messages": [
+      {
+       "id": "xwaku9wq",
+       "senderName": "장의사",
+       "text": "그때 얘기했던 약 성분을 조합하니 새로운 효과를 보이는 약이 만들어졌어.\n한 알 먹고 약 24시간이 지나면 뇌세포의 활동이 둔화되며 기억상실 증세를 보일거고",
+       "image": "",
+       "time": "오후 4:51",
+       "date": "2017-09-20",
+       "unread": 0
+      },
+      {
+       "id": "x5tor8c9",
+       "senderName": "장의사",
+       "text": "약 36시간이 지나면 심장마비 증세로 사망할 거야. 부검을 해도 원인을 파악하진 못할 걸세.",
+       "image": "",
+       "time": "오후 4:52",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xrnghtb5",
+       "senderName": "김교수",
+       "text": "역시 생각대로구나.\n해독제는 있어?",
+       "image": "",
+       "time": "오후 4:52",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "x8creqw1",
+       "senderName": "장의사",
+       "text": "해당 성분을 무력화 시키는 요소를 넣은 알약을 따로 만들어놨어.",
+       "image": "",
+       "time": "오후 4:53",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xcf0luvs",
+       "senderName": "김교수",
+       "text": "응 고마워.\n택배로 바로 좀 보내줘!\n연구에 큰 도움이 될거야.",
+       "image": "",
+       "time": "오후 4:53",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xwq5c2vh",
+       "senderName": "장의사",
+       "text": "이런게 도움이 된다니 신기하네.",
+       "image": "",
+       "time": "오후 4:53",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xuzobi54",
+       "senderName": "장의사",
+       "text": "혹시 외부로 유출되거나 하면 문제가 생길 수 있으니 특별히 잘 간수해야 해!",
+       "image": "",
+       "time": "오후 4:54",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xr2rgqz6",
+       "senderName": "김교수",
+       "text": "물론이지! 내가 저녁 한 번 크게 살게!",
+       "image": "",
+       "time": "오후 4:54",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "xmvyprof",
+     "name": "",
+     "isGroup": false,
+     "per": {
+      "p18g228o": {
+       "unread": 0
+      }
+     },
+     "participants": [
+      {
+       "id": "xg5b1jna",
+       "name": "김교수"
+      },
+      {
+       "id": "xk30wya2",
+       "name": "해커스 팍"
+      }
+     ],
+     "messages": [
+      {
+       "id": "xr3rpp3d",
+       "senderName": "해커스 팍",
+       "text": "교수님! 장실장이 유도환과 명사수와 함께 금괴를 독차지할 계획을 세우고 있는 것 같아요",
+       "image": "",
+       "time": "오후 6:12",
+       "date": "2019-12-10",
+       "unread": 0
+      },
+      {
+       "id": "x90i335r",
+       "senderName": "김교수",
+       "text": "저도 알고 있었습니다.\n하지만 그들은 금괴를 찾을 수 없기에 섣불리 나서지 않을거예요. 모두가 안전하게 금괴를 분배하는 방법은 계획을 실행하기 전에 이미 세워놓았습니다.",
+       "image": "",
+       "time": "오후 6:13",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "x2agv219",
+       "senderName": "해커스 팍",
+       "text": "네 그러시군요. 그런데 저희 일행 중 한 명이 그렇게 될 거라고는 왜 예상하지 못하셨나요?",
+       "image": "",
+       "time": "오후 6:13",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xjq5jdbs",
+       "senderName": "김교수",
+       "text": "그 일은 저도 유감입니다. 모두가 저의 계획대로 따라줬다면 그런 불상사는 일어나지 않았을 거예요.",
+       "image": "",
+       "time": "오후 6:14",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "x225oq9f",
+       "senderName": "해커스 팍",
+       "text": "...네 알겠습니다. 특이사항이 있으면 또 말씀드릴게요.",
+       "image": "",
+       "time": "오후 6:14",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "x24kw918",
+     "name": "",
+     "isGroup": false,
+     "per": {},
+     "participants": [
+      {
+       "id": "xypmczxx",
+       "name": "명사수"
+      },
+      {
+       "id": "xl8rja7d",
+       "name": "대화상대1"
+      }
+     ],
+     "messages": [
+      {
+       "id": "x7mwfhl3",
+       "senderName": "대화상대1",
+       "text": "사수씨, 이제 결정을 내리셔야합니다. 어머니께선 지금 췌장암 3기입니다. 일반 암보다 훨씬 심각한 상황이에요.\n지금이야 어떻게든 수술로 손을 써볼 수가 있겠지만 더 악화되면 아무 답도 없어요.",
+       "image": "",
+       "time": "오후 3:14",
+       "date": "2019-01-21",
+       "unread": 0
+      },
+      {
+       "id": "xirei6pp",
+       "senderName": "명사수",
+       "text": "저도 사방으로 열심히 돈을 구하고 있어요. 2억이란 돈이 어디서 갑자기 뚝 떨어지는 돈이 아니잖아요!\n제가 어떻게든 구해볼테니 수술 먼저 진행하면 안될까요?",
+       "image": "",
+       "time": "오후 3:15",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xtlclj95",
+       "senderName": "대화상대1",
+       "text": "그 부분은 병원 내규상 저도 어쩔 수가 없습니다. 현재 입원비도 많이 밀려있다고 들었습니다.\n어머니를 위해서라도 빠른 시일 내에 접수를 해주시길 바라요. 많은 도움을 줄 수 없어서 미안합니다.",
+       "image": "",
+       "time": "오후 3:16",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xkvvvjam",
+       "senderName": "명사수",
+       "text": "어떻게든 돈을 구해볼게요. 조금만 더 기다려주세요.",
+       "image": "",
+       "time": "오후 3:16",
+       "date": "",
+       "unread": 0
+      }
+     ]
+    },
+    {
+     "id": "xabaijql",
+     "name": "",
+     "isGroup": true,
+     "per": {
+      "p16gxs10": {
+       "unread": 0
+      },
+      "p13zfgp4": {
+       "unread": 0
+      },
+      "p1fs9sjo_2": {
+       "unread": 0
+      }
+     },
+     "participants": [
+      {
+       "id": "xa8ghvoe",
+       "name": "명사수"
+      },
+      {
+       "id": "xnkrq6lo",
+       "name": "장실장"
+      },
+      {
+       "id": "xpbit5sm",
+       "name": "유도환"
+      }
+     ],
+     "messages": [
+      {
+       "id": "xggnq501",
+       "senderName": "장실장",
+       "text": "김교수가 무슨 일로 모두를 모이게 하는 거지?",
+       "image": "",
+       "time": "오후 5:56",
+       "date": "2020-02-18",
+       "unread": 0
+      },
+      {
+       "id": "xxugp6kr",
+       "senderName": "유도환",
+       "text": "누가 무슨 문제를 일으킨 건 아닐까요?",
+       "image": "",
+       "time": "오후 5:57",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xe7pyz0d",
+       "senderName": "명사수",
+       "text": "아니면 성과를 좀 더 일찍 배분하기로 한 걸지도 모르죠!",
+       "image": "",
+       "time": "오후 5:58",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "x1q6bxpt",
+       "senderName": "장실장",
+       "text": "그래 이건 좋은 기회일지도 몰라.\n우리의 계획을 좀 더 빨리 실행할 수 있겠어.",
+       "image": "",
+       "time": "오후 5:58",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xt6eghrb",
+       "senderName": "명사수",
+       "text": "금괴를 어디에 숨겼는지 모르는데 괜찮을까요?",
+       "image": "",
+       "time": "오후 5:59",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "x013qd9d",
+       "senderName": "유도환",
+       "text": "금괴야 교수를 족쳐보면 어디있는지 불겠지!",
+       "image": "",
+       "time": "오후 5:59",
+       "date": "",
+       "unread": 0
+      },
+      {
+       "id": "xpk70dnl",
+       "senderName": "장실장",
+       "text": "그래 다들 단단히 하고 와라!",
+       "image": "",
+       "time": "오후 5:59",
        "date": "",
        "unread": 0
       }
@@ -6663,7 +7108,7 @@ const EMBEDDED_DATA = {
     },
     {
      "id": "pk4r7js_2",
-     "name": "새 인물",
+     "name": "장의사",
      "avatar": "",
      "silo": 1
     },
@@ -6675,7 +7120,7 @@ const EMBEDDED_DATA = {
     },
     {
      "id": "p1fs9sjo",
-     "name": "엄마",
+     "name": "대화상대1",
      "avatar": "",
      "silo": 0
     },
@@ -6696,13 +7141,27 @@ const EMBEDDED_DATA = {
      "name": "김경호",
      "avatar": "",
      "silo": 0
+    },
+    {
+     "id": "pk4r7js_3",
+     "name": "해커스 팍",
+     "avatar": "",
+     "silo": 1
     }
    ],
    "unified": true,
    "aliases": [
     "강남2호점_새_중분류"
    ],
-   "today": "2020-02-22"
+   "today": "2020-02-22",
+   "alias": {
+    "p1vdmjr0_2": {
+     "p1fs9sjo": "엄마"
+    },
+    "p16gxs10": {
+     "p1fs9sjo": "암센터 최원장님"
+    }
+   }
   },
   {
    "key": "성수점_폐공장",
@@ -7767,7 +8226,7 @@ const EMBEDDED_DATA = {
 
 /* 코드(기능) 버전. 데이터와 별개로 “이 파일의 프로그램이 언제 것인지”를 나타낸다.
    관리자 정보란에 표시되므로, 폰에 옛 파일이 올라갔는지 바로 알 수 있다. */
-const CODE_VERSION = '2026-10-06-AO (사람마다 보이는 대화 범위)';
+const CODE_VERSION = '2026-10-07-AP (오프라인 복구 · 글자/프로필 크기)';
 
 const STORE_KEY = 'crimescene_kakao_v2';
 const LEGACY_KEYS = ['crimescene_kakao_v1'];
@@ -9116,6 +9575,28 @@ function deviceTheme(){
 function setDeviceTheme(v){
   keepWrite(THEME_KEY, (v === 'dark' || v === 'light') ? v : '');
 }
+/* ---------- 글자 크기 · 프로필 사진 크기 (폰마다 따로) ----------
+   0~100 % 로 적는다. 100 이 지금 크기이고, 숫자를 줄이면 작아진다.
+   하단 여백처럼 “이 기기에만” 저장되므로 내용을 업데이트해도 그대로 유지된다. */
+const FONT_KEY = 'crimescene_kakao_fontpct';
+const FACE_KEY = 'crimescene_kakao_facepct';
+function devicePct(key){
+  const v = keepRead(key);
+  if(v === '' || v === null || v === undefined) return 100;
+  const n = Math.round(Number(v));
+  return (isFinite(n) && n >= 0 && n <= 100) ? n : 100;
+}
+function setDevicePct(key, n){
+  n = Math.max(0, Math.min(100, Math.round(Number(n) || 0)));
+  keepWrite(key, n === 100 ? '' : String(n));   /* 100 이면 아무것도 저장하지 않는다 */
+}
+function applySizes(){
+  const ph = document.getElementById('phone');
+  if(!ph) return;
+  ph.style.setProperty('--fs', (devicePct(FONT_KEY) / 100).toFixed(3));
+  ph.style.setProperty('--fc', (devicePct(FACE_KEY) / 100).toFixed(3));
+}
+
 function fileTheme(){ return (data && data.themeDefault === 'dark') ? 'dark' : 'light'; }
 function effTheme(){ const d = deviceTheme(); return d === null ? fileTheme() : d; }
 function applyTheme(){
@@ -9182,6 +9663,7 @@ function renderList(){
   applyMeFlags();        /* 이 기기에서 고른 “나” 를 참여자에 표시 */
   applyBottomPad();
   applyTheme();          /* 밝게 / 어둡게 */
+  applySizes();          /* 글자·프로필 크기 */
   renderChrome();
   applyAppIdentity();
   const L = curList();
@@ -9565,7 +10047,7 @@ function guestMode(){
 let treePath = [];          /* [] | [대분류id] | [대분류id, 중분류id] */
 let adminListPicked = false;/* 특정 소분류(목록)를 “열기”로 고른 상태인지 */
 let editingNode = '';       /* 이름 편집 중인 항목 (c1:id / c2:id / L:key) */
-let foldState = { title:true, chrome:true, pad:true, theme:true };   /* 접힘 상태 (기본 접힘) */
+let foldState = { title:true, chrome:true, pad:true, theme:true, size:true };   /* 접힘 상태 (기본 접힘) */
 
 function curC1(){ return treePath[0] ? data.tree.find(c=>c.id===treePath[0]) : null; }
 function curC2(){ const c1 = curC1(); return (c1 && treePath[1]) ? (c1.children||[]).find(c=>c.id===treePath[1]) : null; }
@@ -10211,10 +10693,36 @@ function renderAdminHome(resetScroll){
           <button class="btn btn-ghost btn-sm" id="themeClear" ${deviceTheme()===null?'disabled':''}>기본값으로</button>
           ${wideAdmin() ? '<button class="btn btn-ghost btn-sm" id="themeToFile">파일 기본값으로도 저장</button>' : ''}
         </div>
-        <div class="hint">손님에게 보이는 채팅 목록·채팅방 색입니다. 지금 이 관리자 화면은 편집하기 편하도록 늘 밝게 둡니다.<br>
+        <div class="hint" style="margin-bottom:0">손님에게 보이는 채팅 목록·채팅방 색입니다. 지금 이 관리자 화면은 편집하기 편하도록 늘 밝게 둡니다.<br>
           <b>이 기기에만 저장</b>되므로 내용을 업데이트해도 그대로 유지됩니다.
           지금 ${deviceTheme()===null ? '<b>파일 기본값</b>을 쓰는 중' : '<b>이 기기 값</b>을 쓰는 중'}
           · 파일 기본값 <b>${fileTheme()==='dark'?'어둡게':'밝게'}</b></div>
+      </div>
+    </div>
+
+    <div class="admin-section ${foldState.size?'folded':''}">
+      <h3 class="foldable" data-fold="size">글자 · 프로필 크기 <span class="fold-arrow">${foldState.size?'▶':'▼'}</span></h3>
+      <div class="fold-body">
+        <div class="field" style="margin-bottom:10px">
+          <label style="display:block;margin-bottom:4px">글자 크기 <b id="fontPctLabel">${devicePct(FONT_KEY)}%</b></label>
+          <input type="range" id="fontPct" min="0" max="100" step="5" value="${devicePct(FONT_KEY)}" style="width:100%;padding:0">
+          <div class="row-actions" style="margin-top:6px">
+            ${[60,70,80,90,100].map(v=>`<button class="btn btn-ghost btn-sm" data-fontset="${v}">${v}%</button>`).join('')}
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <label style="display:block;margin-bottom:4px">프로필 사진 크기 <b id="facePctLabel">${devicePct(FACE_KEY)}%</b></label>
+          <input type="range" id="facePct" min="0" max="100" step="5" value="${devicePct(FACE_KEY)}" style="width:100%;padding:0">
+          <div class="row-actions" style="margin-top:6px">
+            ${[50,60,70,80,100].map(v=>`<button class="btn btn-ghost btn-sm" data-faceset="${v}">${v}%</button>`).join('')}
+          </div>
+        </div>
+        <div class="row-actions">
+          <button class="btn btn-ghost btn-sm" id="sizeReset">둘 다 100%로</button>
+        </div>
+        <div class="hint">화면이 작은 폰에서 글자와 프로필 사진을 줄일 때 씁니다. <b>100%가 지금 크기</b>이고 숫자를 줄이면 작아집니다.<br>
+          움직이면 손님 화면에 바로 적용되고, <b>이 기기에만 저장</b>되므로 내용을 업데이트해도 그대로 유지됩니다.
+          (관리자 편집 화면 글씨는 바뀌지 않습니다. 너무 줄이면 읽기 어려우니 보통 60~100% 안에서 맞추세요.)</div>
       </div>
     </div>
 
@@ -10389,6 +10897,27 @@ function finishAdminHome(body){
   $('#themeClear').onclick = ()=>{
     setDeviceTheme(''); applyTheme(); renderAdminHome(); toast('파일 기본값으로 되돌렸습니다');
   };
+  /* 글자 · 프로필 크기 — 움직이면 바로 적용되고 이 기기에 저장된다 */
+  const bindPct = (sliderId, labelId, key, btnAttr)=>{
+    const sl = $('#' + sliderId), lb = $('#' + labelId);
+    const show = ()=>{ if(lb) lb.textContent = devicePct(key) + '%'; };
+    if(sl){
+      const run = e=>{ setDevicePct(key, e.target.value); applySizes(); show(); };
+      sl.oninput = run; sl.onchange = run;
+    }
+    document.querySelectorAll('[' + btnAttr + ']').forEach(b=> b.onclick = ()=>{
+      setDevicePct(key, b.getAttribute(btnAttr));
+      applySizes(); if(sl) sl.value = devicePct(key); show();
+    });
+  };
+  bindPct('fontPct', 'fontPctLabel', FONT_KEY, 'data-fontset');
+  bindPct('facePct', 'facePctLabel', FACE_KEY, 'data-faceset');
+  const szr = $('#sizeReset');
+  if(szr) szr.onclick = ()=>{
+    setDevicePct(FONT_KEY, 100); setDevicePct(FACE_KEY, 100);
+    applySizes(); renderAdminHome(); toast('글자·프로필 크기를 100%로 되돌렸습니다');
+  };
+
   const t2f = $('#themeToFile');
   if(t2f) t2f.onclick = ()=>{
     data.themeDefault = effTheme();
@@ -11261,9 +11790,9 @@ function decideStartScreen(){
   /* 주소 끝에 ?reset=1 을 붙여 열면 폰에 저장된 내용과 캐시를 전부 지우고 파일 내용으로 시작한다 */
   let first = Promise.resolve();
   if(/[?&]reset=1/.test(location.search)){
-    try{ localStorage.removeItem(STORE_KEY); localStorage.removeItem(LAST_KEY); localStorage.removeItem(VIEW_KEY); localStorage.removeItem(PAD_KEY); localStorage.removeItem(BRANCH_KEY); localStorage.removeItem(THEME_KEY); LEGACY_KEYS.forEach(k=>localStorage.removeItem(k)); }catch(e){}
+    try{ localStorage.removeItem(STORE_KEY); localStorage.removeItem(LAST_KEY); localStorage.removeItem(VIEW_KEY); localStorage.removeItem(PAD_KEY); localStorage.removeItem(BRANCH_KEY); localStorage.removeItem(THEME_KEY); localStorage.removeItem(FONT_KEY); localStorage.removeItem(FACE_KEY); LEGACY_KEYS.forEach(k=>localStorage.removeItem(k)); }catch(e){}
     /* 쿠키에 적어 둔 몫도 같이 지운다 — 안 지우면 되살아난다 */
-    try{ [LAST_KEY, VIEW_KEY, BRANCH_KEY, THEME_KEY].forEach(k=>{ document.cookie = k + '=;path=/;max-age=0'; }); }catch(e){}
+    try{ [LAST_KEY, VIEW_KEY, BRANCH_KEY, THEME_KEY, FONT_KEY, FACE_KEY].forEach(k=>{ document.cookie = k + '=;path=/;max-age=0'; }); }catch(e){}
     try{ first = idbClear(); }catch(e){}
     try{ if(window.caches && caches.keys) caches.keys().then(ks=>ks.forEach(k=>{ if(isMyCache(k)) caches.delete(k); })); }catch(e){}
     try{
@@ -11278,6 +11807,7 @@ function decideStartScreen(){
     step('loadView', loadView);
     step('loadBranch', loadBranch);
     step('applyTheme', applyTheme);
+    step('applySizes', applySizes);
     step('selectListFromUrl', selectListFromUrl);
     step('applyMeFlags', applyMeFlags);
     step('save', save);
@@ -11357,6 +11887,7 @@ setTimeout(function once(){
   checkForUpdate(false);
 }, 1500);
 </script>
+
 
 
 
