@@ -8345,7 +8345,7 @@ const EMBEDDED_DATA = {
 
 /* 코드(기능) 버전. 데이터와 별개로 “이 파일의 프로그램이 언제 것인지”를 나타낸다.
    관리자 정보란에 표시되므로, 폰에 옛 파일이 올라갔는지 바로 알 수 있다. */
-const CODE_VERSION = '2026-10-07-AR (인증서 오류 안내)';
+const CODE_VERSION = '2026-10-07-AS (아이폰 설치 안내 · 인증서 안내)';
 
 const STORE_KEY = 'crimescene_kakao_v2';
 const LEGACY_KEYS = ['crimescene_kakao_v1'];
@@ -10157,6 +10157,20 @@ function refreshAdminInfo(){
     mf.textContent = href.replace('./','') || '(없음)';
   }
 }
+/* 아이폰·아이패드인지. 아이폰은 설치 신호(beforeinstallprompt)를 주지 않아
+   버튼으로 바로 깔 수 없고, 사파리의 공유 메뉴로만 홈 화면에 넣을 수 있다. */
+function isIOS(){
+  try{
+    const ua = navigator.userAgent || '';
+    if(/iPad|iPhone|iPod/.test(ua)) return true;
+    return navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;  /* 요즘 아이패드 */
+  }catch(e){ return false; }
+}
+/* 아이폰에서 사파리가 아니면(크롬·네이버앱 등) 홈 화면 추가가 안 되거나 제대로 안 열린다 */
+function iosNotSafari(){
+  const ua = navigator.userAgent || '';
+  return isIOS() && /CriOS|FxiOS|EdgiOS|NAVER|KAKAO|Instagram|FBAN|FBAV|Line/i.test(ua);
+}
 function installApp(){
   if(deferredInstall){
     deferredInstall.prompt();
@@ -10169,6 +10183,12 @@ function installApp(){
   }
   if(!window.isSecureContext){
     toast('localhost 또는 https 로 접속해야 앱 설치가 가능합니다.');
+    return;
+  }
+  if(isIOS()){
+    toast(iosNotSafari()
+      ? '아이폰은 사파리에서만 설치됩니다. 이 주소를 사파리로 연 뒤 공유 ⤴ → “홈 화면에 추가”를 누르세요.'
+      : '사파리 아래쪽 공유 ⤴ → “홈 화면에 추가”를 누르세요.');
     return;
   }
   toast('크롬 메뉴 ⋮ → “앱 설치” 또는 “홈 화면에 추가”를 눌러주세요.');
