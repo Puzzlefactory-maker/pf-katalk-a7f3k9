@@ -1,12 +1,15 @@
-# Netlify 응답 헤더 설정 (다른 서버에서는 무시됩니다)
+# 서버 응답 설정 파일 (클라우드플레어 Pages·Netlify 공용. 다른 서버에서는 그냥 무시됩니다)
+# 이름은 확장자 없이 그대로 _headers 여야 하고, index.html 과 같은 칸에 두어야 합니다.
 
-# 매니페스트는 정식 형식으로 내려줘야 크롬이 확실하게 인식합니다
+# 매니페스트는 정식 형식으로 내려줘야 브라우저가 "앱"으로 확실하게 인식합니다
 /manifest.webmanifest
   Content-Type: application/manifest+json; charset=utf-8
 
-# 본체와 서비스워커는 항상 새 파일인지 확인하고 받도록 합니다
-/index.html
-  Cache-Control: public, max-age=0, must-revalidate
-
-/sw.js
-  Cache-Control: public, max-age=0, must-revalidate
+# 모든 파일 — "폰에 저장해 두되, 열 때마다 바뀐 게 있는지 한 번은 서버에 물어봐라".
+# 이렇게 해야 새 파일을 올렸을 때 폰이 옛 내용을 계속 들고 있지 않습니다.
+# 바뀐 게 없으면 서버가 "그대로다" 한마디만 보내므로 느려지지 않고,
+# 와이파이가 없을 때는 앱이 폰에 저장해 둔 내용으로 그냥 열립니다.
+#
+# (Cache-Control 을 파일마다 따로 적으면 값이 겹쳐 버리므로 여기 한 줄로만 둡니다)
+/*
+  Cache-Control: no-cache

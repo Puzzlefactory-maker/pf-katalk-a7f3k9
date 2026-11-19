@@ -29,13 +29,26 @@ var ASSETS = [
 
 function isMine(k) { return k.indexOf(PREFIX) === 0; }
 
+/* 서버에서 "진짜로 새로" 받아 캐시에 넣는다.
+   cache.add 를 쓰면 브라우저가 들고 있던 옛 복사본이 그대로 들어가 버리므로,
+   주소 끝에 매번 다른 꼬리표를 붙이고 cache: 'reload' 도 함께 준다. */
+function addFresh(cache, url) {
+  var bust = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_sw=' + Date.now().toString(36);
+  var opts = { credentials: 'same-origin' };
+  try { opts.cache = 'reload'; } catch (e) {}
+  return fetch(bust, opts).then(function (res) {
+    if (!res || !res.ok) return;
+    return cache.put(new Request(url), res);
+  })['catch'](function () {});
+}
+
 self.addEventListener('install', function (event) {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
       var jobs = [];
       for (var i = 0; i < ASSETS.length; i++) {
-        jobs.push(cache.add(ASSETS[i])['catch'](function () {}));
+        jobs.push(addFresh(cache, ASSETS[i]));
       }
       return Promise.all(jobs);
     })['catch'](function () {})
@@ -96,6 +109,7 @@ self.addEventListener('fetch', function (event) {
 
   /* 새 파일 확인(_uc)·파일 만들기(_ex) 요청은 서버 파일을 그대로 읽어야 하므로 지나간다 */
   if (href.indexOf('_uc=') >= 0 || href.indexOf('_ex=') >= 0) return;
+  if (href.indexOf('_fresh=') >= 0) return;             /* 새 파일로 다시 열기 — 반드시 서버에서 받는다 */
   if (href.indexOf('_sw=') >= 0) return;                  /* 우리가 뒤에서 보낸 요청 */
 
   var path = href.split('#')[0].split('?')[0];
